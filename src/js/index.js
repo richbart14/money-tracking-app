@@ -8,8 +8,8 @@
 
     var wallet; /*definisco variabile wallet in questo scope(globale) così sarà accessibile sia dalle funzioni che nel DOMContentLoad per istanziare new Wallet*/
 
-    function addOperation() {
-
+    function addOperation(op) {
+        wallet.addOperation(op); //vedo op in entrata e la passo ad addOperation nel costruttore wallet
     }
     function removeOperation() {
 

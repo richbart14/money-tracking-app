@@ -2,8 +2,12 @@
 //wallet.js è un costruttore, conterrà funzionalità principali del nostro portafoglio
 
 var OpType = { //racchiude tipi di operazioni eseguibili all'interno della piattaforma, utilizzo OpType in funzione addOperation per controllo tipo spesa
-    OUT: 0,       //utilizzo enumeratori 0 e 1, 0 false per OUT e 1 true per IN
-    IN: 1
+    OUT: 'OUT',       //ENUMERATORI
+    IN: 'IN'
+}
+
+var WalletErrors = {   //funzione che racchiude errori personalizzati, enumeratore, lista di errori prestabilita  
+    INVALID_OPERATION: 'INVALID_OPERATION'  //invalid operation ha come valore stringa "invalid_operation", nome che assegno io
 }
 
 function getWallet() { //funzione che ci permetterà di leggere dal LOCAL STORAGE
@@ -20,8 +24,11 @@ function getWallet() { //funzione che ci permetterà di leggere dal LOCAL STORAG
     return JSON.parse(wallet);
 }
 
-function saveWallet(wallet) { //funzione che ci permetterà di salvare il nostro portafoglio all'interno del LOCAL STORAGE, vedi addOperation
-    localStorage.setItem('wallet', JSON.stringify(wallet)); //metodo stringify per convertire oggetto in stringa
+function isValidOperation(op) { //funzione che ci permetterà di verificare se l'operazione che riceviamo sia valida o no, vedi addOperation
+    //prima verifica, validazione, vedere se l'operazione esiste
+    /*op esiste solo se primo op ha valore true, se ha una descrizione, se il suo ammontare è un numero maggiore di 0
+      e se op.type è pari ad uno dei enumeratori, se esiste all'interno di OpType */
+    return op && op.description && parseFloat(op.amount) > 0 && typeof OpType[op.type] !== 'undefined';  //parseFloat analizza una stringa e restituisce un numero
 }
 
 /*
@@ -43,13 +50,21 @@ class Wallet {
             balance = wallet.balance;
             operations = wallet.operations;
         }; 
+        function saveWallet() { //funzione che ci permetterà di salvare il nostro portafoglio all'interno del LOCAL STORAGE
+            localStorage.setItem('wallet', JSON.stringify({ balance: balance, operations: operations })); //metodo stringify per convertire oggetto in stringa
+            //passo i parametri del wallet, balance e operations, salvo oggetto composto da questi valori
+        }
 
         /*Scrivendo normalmente ad es.  function addOperation()
         le funzioni sono all'interno dello scope del wallet e non vengono stampate nel console.log(wallet) di prova in index.js.
         Per renderle pubbliche devo salvarle all'interno del this*/
         this.addOperation = function(op) { //funzione addOperation riceverà un parametro, ovvero l'oggetto che si vuole aggiungere
+            //validazione parametro in entrata, creo condizione isValidOperation e passo parametro op
+            if(!isValidOperation(op)) { //se non è valida lancio errore
+                throw new Error(WalletErrors.INVALID_OPERATION); //INVALID_OPERATION nome che assegno io in WalletErrors
+            }
             var operation = {
-                amount: op.amount,  //ammontare dell'operazione
+                amount: parseFloat(op.amount),  //ammontare dell'operazione
                 description: op.description, //descrizione, causale spostamento denaro
                 type: op.type, //tipo, spesa o entrata
                 date: new Date().getTime()  //getDate metodo dell'oggetto Date, restituisce tempo in millisecondi (dall'epoch-time 1970)
@@ -65,13 +80,17 @@ class Wallet {
             operations.push(operation);
             saveWallet(); //funzione che ci permetterà di salvare il nostro portafoglio all'interno del LOCAL STORAGE
         };
+
         this.removeOperation = function() {
         };
+
         this.findOperation = function() {
         };
+
         this.getBalance = function() {
             return balance; //return del balance
         };
+
         this.getOperations = function() {
             return operations; //return della lista delle operazioni
         };
