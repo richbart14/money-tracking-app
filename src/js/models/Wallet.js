@@ -1,6 +1,11 @@
 //portafoglio, oggetto di riferimento
 //wallet.js è un costruttore, conterrà funzionalità principali del nostro portafoglio
 
+var OpType = { //racchiude tipi di operazioni eseguibili all'interno della piattaforma, utilizzo OpType in funzione addOperation per controllo tipo spesa
+    OUT: 0,       //utilizzo enumeratori 0 e 1, 0 false per OUT e 1 true per IN
+    IN: 1
+}
+
 function getWallet() { //funzione che ci permetterà di leggere dal LOCAL STORAGE
     var wallet = localStorage.getItem('wallet'); //vado a ricercare il portafoglio salvato nel local storage
     /*funzione getItem dell'oggetto localStorage ci restituirà "null" nel caso in cui non trovasse
@@ -13,6 +18,10 @@ function getWallet() { //funzione che ci permetterà di leggere dal LOCAL STORAG
     }
     //nel caso in cui invece esista, effettuo il parse della stringa che mi restituisce il getItem per trasformarla in oggetto JSON 
     return JSON.parse(wallet);
+}
+
+function saveWallet(wallet) { //funzione che ci permetterà di salvare il nostro portafoglio all'interno del LOCAL STORAGE, vedi addOperation
+    localStorage.setItem('wallet', JSON.stringify(wallet)); //metodo stringify per convertire oggetto in stringa
 }
 
 /*
@@ -38,7 +47,23 @@ class Wallet {
         /*Scrivendo normalmente ad es.  function addOperation()
         le funzioni sono all'interno dello scope del wallet e non vengono stampate nel console.log(wallet) di prova in index.js.
         Per renderle pubbliche devo salvarle all'interno del this*/
-        this.addOperation = function() {
+        this.addOperation = function(op) { //funzione addOperation riceverà un parametro, ovvero l'oggetto che si vuole aggiungere
+            var operation = {
+                amount: op.amount,  //ammontare dell'operazione
+                description: op.description, //descrizione, causale spostamento denaro
+                type: op.type, //tipo, spesa o entrata
+                date: new Date().getTime()  //getDate metodo dell'oggetto Date, restituisce tempo in millisecondi (dall'epoch-time 1970)
+            }
+            /*controllo il tipo di operazione, rimuovere dal nostro saldo l'ammontare dell'operazione se è operazione
+            in uscita, o viceversa se è operazione in entrata aggiungere al nostro saldo l'ammontare dell'operazione*/
+            if(op.type === OpType.IN) { //utilizzo enumeratori definiti in cima al file nella variabile OpType
+                balance = operation.amount + balance; //ENTRATA
+            } else if (op.type === OpType.OUT) {
+                balance = balance - operation.amount; //SPESA
+            }
+            //Aggiungo operazione alla lista di operazioni, array operations
+            operations.push(operation);
+            saveWallet(); //funzione che ci permetterà di salvare il nostro portafoglio all'interno del LOCAL STORAGE
         };
         this.removeOperation = function() {
         };
