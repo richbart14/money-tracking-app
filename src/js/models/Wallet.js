@@ -1,18 +1,21 @@
 //portafoglio, oggetto di riferimento
 //wallet.js è un costruttore, conterrà funzionalità principali del nostro portafoglio
 
-var OpType = { //racchiude tipi di operazioni eseguibili all'interno della piattaforma, utilizzo OpType in funzione addOperation per controllo tipo spesa
+//(uso const per evitare riassegnazioni o ridichiarazioni)
+/*RACCHIUDENDO IN OBJECT.FREEZE CI PERMETTE DI EVITARE DALL'ESTERNO (console.log) MODIFICHE DI PRIMO LIVELLO
+  (riassegnazioni di valore OUT, IN, INVALID_OPERATION, OPERATION_NOT_FOUND). così non è possibile accesso dalla console*/
+const OpType = Object.freeze({ //racchiude tipi di operazioni eseguibili all'interno della piattaforma, utilizzo OpType in funzione addOperation per controllo tipo spesa
     OUT: 'OUT',       //ENUMERATORI
     IN: 'IN'
-}
+})
 
-var WalletErrors = {   //funzione che racchiude errori personalizzati, enumeratore, lista di errori prestabilita  
+const WalletErrors = Object.freeze({   //funzione che racchiude errori personalizzati, enumeratore, lista di errori prestabilita  
     INVALID_OPERATION: 'INVALID_OPERATION',  //invalid operation ha come valore stringa "invalid_operation", nome che assegno io
     OPERATION_NOT_FOUND: 'OPERATION_NOT_FOUND'
-}
+})
 
 function getWallet() { //funzione che ci permetterà di leggere dal LOCAL STORAGE
-    var wallet = localStorage.getItem('wallet'); //vado a ricercare il portafoglio salvato nel local storage
+    const wallet = localStorage.getItem('wallet'); //vado a ricercare il portafoglio salvato nel local storage
     /*funzione getItem dell'oggetto localStorage ci restituirà "null" nel caso in cui non trovasse
     nessuna corrispondenza, o ci ritornerà la stringa dell'elemento salvato*/
     if(!wallet) { //verifico che wallet esista
@@ -41,11 +44,11 @@ class Wallet {
     constructor() {
         //saldo e lista, proprietà visibili solo all'interno di questo blocco di codice Wallet
         //perchè non le ho dichiarate con il this. Così evito possibili corruzioni esterne non volute
-        var balance = 0;  //SALDO
-        var operations = []; //LISTA DELLE OPERAZIONI (Array)
+        let balance = 0;  //SALDO
+        let operations = []; //LISTA DELLE OPERAZIONI (Array)
 
         function init() { //avrà il compito di inizializzare il nostro saldo e la nostra lista operazioni 
-            var wallet = getWallet(); /*il nostro wallet sarà inizialmente un portafoglio vuoto, però man mano che
+            const wallet = getWallet(); /*il nostro wallet sarà inizialmente un portafoglio vuoto, però man mano che
                                       l'utente aggiungerà le operazioni necessiteremo di una forma di salvataggio
                                       delle operazioni all'interno del browser. LOCAL STORAGE*/
             balance = wallet.balance;
@@ -64,7 +67,7 @@ class Wallet {
             if(!isValidOperation(op)) { //se non è valida lancio errore
                 throw new Error(WalletErrors.INVALID_OPERATION); //INVALID_OPERATION nome che assegno io in WalletErrors
             }
-            var operation = {
+            const operation = {
                 amount: parseFloat(op.amount),  //ammontare dell'operazione
                 description: op.description.trim(), //descrizione, causale spostamento denaro - .trim dati salvati senza spazi iniziali e finali
                 type: op.type, //tipo, spesa o entrata
@@ -86,7 +89,7 @@ class Wallet {
             //verifica se l'operazione che vogliamo eliminare è presente nell'array operations
             /*primo passo è definire parametro all'interno di removeOperation, un parametro che possa identificare univocamente
             un operazione all'interno della lista delle operazioni. Uso la data, il timestamp. (id) sarà date*/
-            var operationIndex;
+            let operationIndex;
             for(var i = 0; i < operations.length; i++) { //ricerca dell'operazione all'interno del timestamp, indice 0 array.length e ++
                 if(operations[i].date === id) { //vogliamo sapere se operations di indice.date è uguale alla id
                     operationIndex = i; /*se lo troviamo dobbiamo conoscere l'indice, ovvero la posizione nella quale si trova 
@@ -111,9 +114,9 @@ class Wallet {
 
         this.findOperation = function(searchValue) { //funzione che ci permetterà di trovare ciò che l'utente sta cercando, il nome dell'operazione
             //il nome dell'operazione andrà manipolato affinchè non ci siano errori, spazi iniziali o finali, maiuscole e minuscole
-            var val = searchValue.toLowerCase().trim(); //toLowerCase rende stringa in minuscolo, trim toglie spazi iniziali-finali
+            const val = searchValue.toLowerCase().trim(); //toLowerCase rende stringa in minuscolo, trim toglie spazi iniziali-finali
             
-            var operationsFound = [];
+            const operationsFound = [];
             for(var i = 0; i < operations.length; i++) { //ricerca dell'operazione, i è indice di partenza
                 var description = operations[i].description.toLowerCase();
                 //comparare descrizione con il valore passato dall'utente, verifico che description contenga il valore cercato
