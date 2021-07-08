@@ -66,7 +66,7 @@ class Wallet {
             }
             var operation = {
                 amount: parseFloat(op.amount),  //ammontare dell'operazione
-                description: op.description, //descrizione, causale spostamento denaro
+                description: op.description.trim(), //descrizione, causale spostamento denaro - .trim dati salvati senza spazi iniziali e finali
                 type: op.type, //tipo, spesa o entrata
                 date: new Date().getTime()  //getDate metodo dell'oggetto Date, restituisce tempo in millisecondi (dall'epoch-time 1970)
             }
@@ -109,7 +109,21 @@ class Wallet {
             saveWallet();
         };
 
-        this.findOperation = function() {
+        this.findOperation = function(searchValue) { //funzione che ci permetterà di trovare ciò che l'utente sta cercando, il nome dell'operazione
+            //il nome dell'operazione andrà manipolato affinchè non ci siano errori, spazi iniziali o finali, maiuscole e minuscole
+            var val = searchValue.toLowerCase().trim(); //toLowerCase rende stringa in minuscolo, trim toglie spazi iniziali-finali
+            
+            var operationsFound = [];
+            for(var i = 0; i < operations.length; i++) { //ricerca dell'operazione, i è indice di partenza
+                var description = operations[i].description.toLowerCase();
+                //comparare descrizione con il valore passato dall'utente, verifico che description contenga il valore cercato
+                if(description.indexOf(val) >= 0) {  /*indexOf ci permette di verificare all'interno di una stringa/array/lista elementi
+                                                      che quell'elemento è contenuto e l'indexOf restituisce un indice*/
+                    operationsFound.push(operations[i]);                       
+                    break;
+                }
+            }
+            return operationsFound;  /*restituisce lista operazioni appena trovate.*/
         };
 
         this.getBalance = function() {

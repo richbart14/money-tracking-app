@@ -1,4 +1,4 @@
-(function() {  // IIFE (Immediately Invoked Function Expression)
+//(function() {  // IIFE (Immediately Invoked Function Expression)
                /*Per ragioni di sicurezza racchiudo blocco di istruzioni all'interno di una funzione anonima.
                Viene richiamata immediatamente non appena il browser vede la funzione.
                Nella IIFE creo spazio a sè stante che vive di vita propria, il tutto ha uno spazio riservato
@@ -14,8 +14,8 @@
     function removeOperation(id) {
         wallet.removeOperation(id); //richiamo removeOperation passando l'identificativo
     }
-    function findOperation() {
-
+    function findOperation(val) {
+        return wallet.findOperation(val); //return serve perchè è operazione di restituzione di un elemento
     }
     function getBalance() {
         return wallet.getBalance(); //accedo al metodo inserito all'interno del costruttore
@@ -29,4 +29,4 @@
         wallet = new Wallet(); //creazione variabile wallet che sarà la nuova istanza del costruttore Wallet
         //console.log(wallet);  LOG PROVA per vedere class wallet con le sue funzioni
     });
-})();
+//})();
