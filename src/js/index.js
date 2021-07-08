@@ -11,8 +11,8 @@
     function addOperation(op) {
         wallet.addOperation(op); //vedo op in entrata e la passo ad addOperation nel costruttore wallet
     }
-    function removeOperation() {
-
+    function removeOperation(id) {
+        wallet.removeOperation(id); //richiamo removeOperation passando l'identificativo
     }
     function findOperation() {
 

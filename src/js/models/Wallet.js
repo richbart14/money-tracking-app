@@ -7,7 +7,8 @@ var OpType = { //racchiude tipi di operazioni eseguibili all'interno della piatt
 }
 
 var WalletErrors = {   //funzione che racchiude errori personalizzati, enumeratore, lista di errori prestabilita  
-    INVALID_OPERATION: 'INVALID_OPERATION'  //invalid operation ha come valore stringa "invalid_operation", nome che assegno io
+    INVALID_OPERATION: 'INVALID_OPERATION',  //invalid operation ha come valore stringa "invalid_operation", nome che assegno io
+    OPERATION_NOT_FOUND: 'OPERATION_NOT_FOUND'
 }
 
 function getWallet() { //funzione che ci permetterà di leggere dal LOCAL STORAGE
@@ -81,7 +82,31 @@ class Wallet {
             saveWallet(); //funzione che ci permetterà di salvare il nostro portafoglio all'interno del LOCAL STORAGE
         };
 
-        this.removeOperation = function() {
+        this.removeOperation = function(id) {
+            //verifica se l'operazione che vogliamo eliminare è presente nell'array operations
+            /*primo passo è definire parametro all'interno di removeOperation, un parametro che possa identificare univocamente
+            un operazione all'interno della lista delle operazioni. Uso la data, il timestamp. (id) sarà date*/
+            var operationIndex;
+            for(var i = 0; i < operations.length; i++) { //ricerca dell'operazione all'interno del timestamp, indice 0 array.length e ++
+                if(operations[i].date === id) { //vogliamo sapere se operations di indice.date è uguale alla id
+                    operationIndex = i; /*se lo troviamo dobbiamo conoscere l'indice, ovvero la posizione nella quale si trova 
+                                        questa operazione, al fine di utilizzare succesivamente l'indice nella funzione SPLICE
+                                        per rimuoverlo dalla lista di operazioni*/
+                    break; //quando troviamo l'operazione terminiamo il ciclo con la parola chiave break
+                }
+            }
+            if(typeof operationIndex === 'undefined') { //CONTROLLO. SE UNDEFINED LANCIA ERRORE
+                throw new Error(WalletErrors.OPERATION_NOT_FOUND);
+            }
+            //CONTROLLO SE OPERAZIONE operationIndex CHE RIMUOVO è DI TIPO IN O DI TIPO OUT, SE è SPESA O ENTRATA
+            if(operations[operationIndex].type === OpType.IN) { //SE di tipo "IN"
+                balance -= operations[operationIndex].amount; //in questo caso il balance sarà meno quell'amount dell'operazione
+            }else if(operations[operationIndex].type === OpType.OUT) { //SE di tipo "OUT"
+                balance += operations[operationIndex].amount; //nel caso sia un out aggiungeremo amount dell'operazione al balance
+            }
+            //ALTRIMENTI SE TERMINA CON SUCCESSO EFFETTUO LO SPLICE (se non trova errore, se non è UNDEFINED)
+            operations.splice(operationIndex, 1); //(da quale indice dobbiamo partire, quanti elementi vogliamo rimuovere)
+            saveWallet();
         };
 
         this.findOperation = function() {
