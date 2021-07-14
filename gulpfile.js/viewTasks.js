@@ -18,7 +18,7 @@ const compileIndex = function() {
     /*quello che andremo a restituire sarà sempre un qualcosa legato a gulp,
     parto da un file di entrata che sarà index.html*/
     return gulp.src("./src/index.html")
-    //definisco cosa volgio fare con questo index.html utilizzando i metodi pipe()
+    //definisco cosa voglio fare con questo index.html utilizzando i metodi pipe()
         .pipe(inject(jsIndex, { relative: true, name: "custom" })) //lo inserisco all'interno di una sezione che chiamo CUSTOM
         /*inserisco sezione in index.html attraverso <!-- custom:js --> <!-- endinject -->
                                                           nome sezione:tipo di file
@@ -37,7 +37,14 @@ la nostra series di sviluppo.
 POI LANCIO LO SCRIPT DEL TERMINALE npm run dev
 che compilerà il nostro index.html dentro cartella DIST */
 
+//IMPLEMENTO FUNZIONE DI WATCH ANCHE PER il file index.html
+const watchIndex = function(cb) {
+    gulp.watch("./src/index.html", compileIndex)
+    cb();
+}
+
 //ESPORTO FUNZIONE compileIndex
 module.exports = {
-    compileIndex: compileIndex
+    compileIndex: compileIndex,
+    watchIndex: watchIndex
 }

@@ -7,14 +7,15 @@ const gulp = require("gulp");
 const series = gulp.series; /*serve per lista di processi automatizzati che verranno eseguiti quando siamo in modalità
                              development, ovvero mentre stiamo sviluppando la nostra applicazione*/
 
-//definisco primo processo dentro series, COMPILEINDEX, all'interno di un nuovo file
-const compileIndex = require("./viewTasks").compileIndex; /*lo chiamo viewTasks, ovvero tutti quei processi che riguardano 
+//definisco primo processo dentro series, COMPILEINDEX e WATCHINDEX, entrambi all'interno di viewTasks
+const viewTasks = require("./viewTasks"); /*file chiamato viewTasks, ovvero tutti quei processi che riguardano 
                                           le nostre viste, quindi i nostri file HTML, nel nostro caso soltanto l'index.html*/
-//importo secondo processo copyJs
-const copyJs = require("./jsTasks").copyJs;                                          
-
+//importo secondo processo copyJs e terzo processo watchJs
+const jsTasks = require("./jsTasks");    
+ 
 //chiamo questo series DEV
-const dev = series(compileIndex, copyJs /*, serve, watchHtml*/); /*invoco metodo series su una lista di processi che vado ad inizializzare 
+const dev = series(viewTasks.compileIndex, jsTasks.copyJs, jsTasks.watchJs, viewTasks.watchIndex /*, serve, watchHtml*/); 
+                                /*invoco metodo series su una lista di processi che vado ad inizializzare 
                                  successivamente in alcuni file separati.
                                  Un primo processo sarà quello di compilare in nostro index,
                                  ovvero il nostro file HTML.
