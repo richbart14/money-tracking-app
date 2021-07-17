@@ -13,6 +13,7 @@
     
     const Wallet = require("./models/Wallet").Wallet; //require di Wallet, serve per BROWSERIFY
 
+    let wallet;
     const addOperation = function(op) {
         try {
             wallet.addOperation(op); //vedo op in entrata e la passo ad addOperation nel costruttore wallet

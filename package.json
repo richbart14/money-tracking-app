@@ -5,7 +5,8 @@
   "main": "src/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "gulp dev"
+    "dev": "gulp build --dev",
+    "prod": "gulp build --prod"
   },
   "repository": {
     "type": "git",
@@ -29,8 +30,11 @@
     "browserify": "^17.0.0",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
+    "gulp-if": "^3.0.0",
     "gulp-inject": "^5.0.5",
+    "gulp-uglify": "^3.0.2",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "vinyl-source-stream": "^2.0.0",
+    "yargs": "^17.0.1"
   }
 }

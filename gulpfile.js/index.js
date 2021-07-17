@@ -30,8 +30,8 @@ const clean = function(cb) {
     cb(); //funzione di calback che gulp utilizza per capire se un processo è terminato qualora non dovesse restituire un pipe
 }
  
-//chiamo questo series DEV
-const dev = series(clean, viewTasks.compileIndex, jsTasks.bundleJS, jsTasks.watchJs, viewTasks.watchIndex, serveTasks.serve); 
+//chiamo questo series DEV (poi chiamata BUILD quando ho aggiunto modalità di produzione a modalità di sviluppo)
+const build = series(clean, viewTasks.compileIndex, jsTasks.bundleJS, jsTasks.watchJs, viewTasks.watchIndex, serveTasks.serve); 
                                 /*invoco metodo series su una lista di processi che vado ad inizializzare 
                                  successivamente in alcuni file separati.
                                  Un primo processo sarà quello di compilare il nostro index,
@@ -50,7 +50,7 @@ la nostra series di sviluppo.
 POI LANCIO LO SCRIPT DEL TERMINALE npm run dev
 che compilerà il nostro index.html dentro cartella DIST */
 
-//ESPORTO DEV AFFINCHè GULP POSSA RITROVARE FUNZIONALITà DEV
+//ESPORTO DEV AFFINCHè GULP POSSA RITROVARE FUNZIONALITà DEV (l'ho chiamata build quando ho implementato modalità di produzione a modalità di sviluppo)
 module.exports = {
-    dev: dev
+    build: build
 }

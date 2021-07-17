@@ -14,6 +14,17 @@ const buffer = require("vinyl-buffer"); //ci permette di getire buffer dei dati 
 
 const paths = require("./paths"); //IMPORTO PATHS che è il file dove gestisco i percorsi dell'applicazione
 
+/*IMPLEMENTO MODALITà DI PRODUZIONE A MODALITà DI SVILUPPO, modalità produzione sarà un bundle MINIFICATO e OFFUSCATO (con uglify)
+Aggiungo nel package.json gulp build con parametro --dev o --prod (dev e prod sono i parametri) NPM RUN PROD - NPM RUN DEV
+Utilizzo un singolo SERIES per tutte e due le modalità di sviluppo della nostra BUILD, e per questo utilizzo dei parametri per indicare
+al processo di build se sarà di sviluppo o di produzione.
+INSTALLO E IMPORTO LE LIBRERIE:  npm i gulp-uglify yargs gulp-if -D*/
+const gulpIf = require("gulp-if"); //libreria che ci permette di creare la condizione
+const uglify = require("gulp-uglify"); //libreria per minificare e offuscare il codice
+const args = require("yargs").argv; //libreria che ci permette di leggere i parametri che vengono passati nella linea di comando
+                                    //.argv è la variabile in cui vengono inseriti i comandi, ovvero i paramtri che passo dev o prod
+
+
 //DEFINISCO NUOVA TASK che chiamo copyJs
 const bundleJS = function() {
     //const jsIndex = "./src/js/index.js";
@@ -28,14 +39,14 @@ const bundleJS = function() {
     //return gulp.src([jsIndex, utilsIndex, modelsIndex], { base: paths.getSrcFolder() /* "./src" */ }) //base folder
            //gulp.src unico con le tre risorse che vogliamo copiare
         //.pipe(gulp.dest("./dist")); //cartella di destinazione, cartella dist
-        .pipe(gulp.dest(paths.getJSOutputPath())); 
-        //i nostri file js devono essere all'interno della cartella javascript
+        .pipe(gulp.dest(paths.getJSOutputPath())); //i nostri file js devono essere all'interno della cartella javascript(vedi JSOutputPath)      
 };
-//il processo copyJs lo importo nel file inziale index.js
+//il processo copyJs lo importo nel file iniziale index.js
 
 //BROWSERIFY: CREO PROCESSO DI BUNDLING ALL'INTERNO DEL PROCESSO DI GULP
 const browserifyBundle = function() {
     //funzione che restituisce un buffer di dati proveniente dal metodo browserify
+    const prod = args.prod; //VARIABILE PER LEGGERE IL PARAMETRO SE BUILD DI PRODUZIONE O SVILUPPO
     return browserify({ //ritorno metodo browserify
         entries: paths.getJsEntryPath()  /* js/index.js punto d'entrata della nostra applicazione, come se fosse radice 
                                         di un albero e dalla radice di quest'albero ripercorriamo tutti i suoi rami,
@@ -43,13 +54,19 @@ const browserifyBundle = function() {
     })
         .bundle() //metodo BUNDLE ci permetterà di ricreare le connessioni tra i file, inizia ricostruzione delle connessioni
         .pipe(source(paths.getJSOutputEntry()))  //source è libreria vinyl-source-stream
-        .pipe(buffer()); //buffer è la libreria vinyl-buffer
+        .pipe(buffer()) //buffer è la libreria vinyl-buffer
         //questo buffer di dati va utilizzato per inserire questo file finale in una cartella di destinazione
         //LO INSERISCO NELLA FUNZIONE bundleJs
+        .pipe(gulpIf(prod, uglify())) //inserisco condizione che legge parametro da variabile prod
+        //effettuerà offuscamento del codice solo quando build è di produzione
 }
 
 //DEFINISCO NUOVO TASK WATCHER DEI FILE JS, CONTROLLO MODIFICHE FILE
 const watchJs = function(cb) {
+    const prod = args.prod; //VARIABILE PER LEGGERE IL PARAMETRO SE BUILD DI PRODUZIONE O SVILUPPO
+    if(prod) { //se in modalità di PRODUZIONE IL WATCH NON VIENE LANCIATO, PROCESSO CHE NON SERVE IN MODALITà PROD
+        return cb(); //chiamo calback per comunicare a gulp di terminare il processo, return interrompe l'esecuzione
+    }
     gulp.watch(paths.getJsSrcPath("**/*"), bundleJS);  // **/* tutti i file cartella principale e sottocartelle, dato che abbiamo anche models
                                 //così starà attento a qualsiasi cambiamento all'interno dell'intera cartella e sottocartelle di js
     //una volta effettuato il gulp.watch serve funzione di callback che è copyJs/bundleJS, ovvero cosa chiamare quando effettuiamo gulp.watch

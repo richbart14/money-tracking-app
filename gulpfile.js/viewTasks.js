@@ -1,6 +1,7 @@
 //ALL'INTERNO DI QUESTO VIEWTASKS INSERISCO TUTTO CIò CHE RIGUARDA LE NOSTRE VISTE, nel nostro caso index.html
 //prima di tutto va importato GULP
 const gulp = require("gulp");
+const args = require("yargs").argv; //libreria che ci permette di leggere i parametri PROD o DEV che vengono passati nella linea di comando
 const inject = require("gulp-inject"); /*installo gulp inject, è UN PLUGIN DI GULP, che ci permette di inserire all'interno
                                         di un file quello che vogliamo, la stringa che vogliamo (stringa script src)
                                         npm i gulp-inject -D
@@ -15,8 +16,8 @@ const compileIndex = function() {
     che andrò ad utilizzare nel primo pipe con metodo inject */
     //const jsIndex = gulp.src("./src/js/index.js");
     const jsIndex = gulp.src(paths.getJsEntryPath()); //UTILIZZO PERCORSI GENERATI CON PATH E NON LA STRINGA
-    const utilsIndex = gulp.src(paths.getJsSrcPath("/utils.js"));
-    const modelsIndex = gulp.src(paths.getJsSrcPath("/models/Wallet.js"));
+    //const utilsIndex = gulp.src(paths.getJsSrcPath("/utils.js"));
+    //const modelsIndex = gulp.src(paths.getJsSrcPath("/models/Wallet.js"));
 
     /*quello che andremo a restituire sarà sempre un qualcosa legato a gulp,
     parto da un file di entrata che sarà index.html*/
@@ -45,6 +46,10 @@ che compilerà il nostro index.html dentro cartella DIST */
 
 //IMPLEMENTO FUNZIONE DI WATCH ANCHE PER il file index.html
 const watchIndex = function(cb) {
+    const prod = args.prod; //VARIABILE PER LEGGERE IL PARAMETRO SE BUILD DI PRODUZIONE O SVILUPPO
+    if(prod) { //se in modalità di PRODUZIONE IL WATCHINDEX NON VIENE LANCIATO, PROCESSO CHE NON SERVE IN MODALITà PROD
+        return cb(); //chiamo calback per comunicare a gulp di terminare il processo, return interrompe l'esecuzione
+    }
     gulp.watch(paths.getHTMLEntryPath(), compileIndex); //UTILIZZO PERCORSI GENERATI CON PATH E NON LA STRINGA
     cb();
 }
