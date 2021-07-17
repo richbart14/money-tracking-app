@@ -23,7 +23,14 @@ const gulpIf = require("gulp-if"); //libreria che ci permette di creare la condi
 const uglify = require("gulp-uglify"); //libreria per minificare e offuscare il codice
 const args = require("yargs").argv; //libreria che ci permette di leggere i parametri che vengono passati nella linea di comando
                                     //.argv è la variabile in cui vengono inseriti i comandi, ovvero i paramtri che passo dev o prod
-
+/*AGGIUNGO MODALITà DEBUG, installo e importo libreria SOURCEMAPS
+npm i gulp-sourcemaps
+Aggiungo "prod:debug": "npm run prod -- --debug" nel package.json
+debug -> nuova modalità che ci permetterà di utilizzare modalità di produzione però come se stessimo sviluppando, nel senso che
+il codice finale sarà sempre offuscato ma attraverso i file aggiuntvi chiamati sourcemaps potremmo comunque leggere quel file
+offuscato come se fosse un file non offuscato. I file .map che vengono generati attraverso il sourcemaps ci permettono di 
+effettuare un debugging vero e proprio di una eventuale versione di produzione della piattaforma.*/
+const sourcemaps = require("gulp-sourcemaps");
 
 //DEFINISCO NUOVA TASK che chiamo copyJs
 const bundleJS = function() {
@@ -47,6 +54,7 @@ const bundleJS = function() {
 const browserifyBundle = function() {
     //funzione che restituisce un buffer di dati proveniente dal metodo browserify
     const prod = args.prod; //VARIABILE PER LEGGERE IL PARAMETRO SE BUILD DI PRODUZIONE O SVILUPPO
+    const debug = args.debug; //variabile per leggere parametro DEBUG  npm run prod:debug (vedi package.json)
     return browserify({ //ritorno metodo browserify
         entries: paths.getJsEntryPath()  /* js/index.js punto d'entrata della nostra applicazione, come se fosse radice 
                                         di un albero e dalla radice di quest'albero ripercorriamo tutti i suoi rami,
@@ -57,8 +65,10 @@ const browserifyBundle = function() {
         .pipe(buffer()) //buffer è la libreria vinyl-buffer
         //questo buffer di dati va utilizzato per inserire questo file finale in una cartella di destinazione
         //LO INSERISCO NELLA FUNZIONE bundleJs
+        .pipe(gulpIf(debug, sourcemaps.init())) //SOURCEMAPS (MODALITà DEBUG) CI INTERESSA SOLO SE IN MODALITà DI DEBUG
         .pipe(gulpIf(prod, uglify())) //inserisco condizione che legge parametro da variabile prod
         //effettuerà offuscamento del codice solo quando build è di produzione
+        .pipe(gulpIf(debug, sourcemaps.write("./"))); //SOURCEMAPS (MODALITà DEBUG) .write per salvare i cambi  ./ per salvare file .map nello stesso percorso dove è stato creato il file
 }
 
 //DEFINISCO NUOVO TASK WATCHER DEI FILE JS, CONTROLLO MODIFICHE FILE

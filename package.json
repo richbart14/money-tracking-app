@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "gulp build --dev",
-    "prod": "gulp build --prod"
+    "prod": "gulp build --prod",
+    "prod:debug": "npm run prod -- --debug"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,9 @@
     "url": "https://github.com/richbart14/money-tracking-app/issues"
   },
   "homepage": "https://github.com/richbart14/money-tracking-app#readme",
-  "dependencies": {},
+  "dependencies": {
+    "gulp-sourcemaps": "^3.0.0"
+  },
   "devDependencies": {
     "browser-sync": "^2.27.4",
     "browserify": "^17.0.0",

@@ -19,7 +19,9 @@ const paths = require("./paths"); //IMPORTO PATHS che è il file dove gestisco i
 //creo processo SERVE, ci permetterà di avviare il browser
 const serve = function(cb) {
     const prod = args.prod; //VARIABILE PER LEGGERE IL PARAMETRO SE BUILD DI PRODUZIONE O SVILUPPO
-    if(prod) { //se in modalità di PRODUZIONE IL SERVE NON VIENE LANCIATO, PROCESSO CHE NON SERVE IN MODALITà PROD
+    const debug = args.debug; //variabile per leggere parametro DEBUG  npm run prod:debug (vedi package.json)
+    if(prod && !debug) { //se in modalità di PRODUZIONE IL SERVE NON VIENE LANCIATO, PROCESSO CHE NON SERVE IN MODALITà PROD
+                        //in modalità debug invece browsersync viene lanciato
         return cb(); //chiamo calback per comunicare a gulp di terminare il processo, return interrompe l'esecuzione
     }
     browserSync.init({ //utilizzo l'init di questo oggetto
