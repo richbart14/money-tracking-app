@@ -42,5 +42,12 @@ module.exports = {
         } 
         //altrimenti solo la const base con il percorso lì dentro definito
         return baseJSPath;
+    },
+    //PERCORSI BROWSERIFY
+    getJSOutputPath: function() { //cartella di destinazione funzione bundleJs
+        return this.getDistFolder() + '/' + paths.js.dist;
+    },
+    getJSOutputEntry: function() {
+        return paths.js.entry; //file con stesso nome index.js anche per cartella di destinazione, se voglio cambiare nome aggiungo output: a riga 18
     } 
 }

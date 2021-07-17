@@ -8,9 +8,9 @@ ALL'INTERNO DELLA NOSTRA CARTELLA DI DESTINAZIONE.
 AGGIUNGO PERCIò NUOVA LIBRERIA browser-sync
 PER INSTALLARLA:  npm i browser sync -D*/
 
-const browserSync = require("browser-sync").create();
-const { watch } = require("browser-sync");
+//IMPORTO FUNZIONALITà BROWSER-SYNC
 //metodo create() ci restituisce automaticamente l'oggetto che si occuperà di avviare il browser e gestire refresh della pagina
+const browserSync = require("browser-sync").create();
 
 const paths = require("./paths"); //IMPORTO PATHS che è il file dove gestisco i percorsi dell'applicazione
 
