@@ -5,16 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Money Tracking App</title>
+
+    <!--Libreria NORMALIZE, ci permette di equiparare lo stile di qualsiasi browser, per ottenere stesso risultato su ogni browser-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <!--Libreria SKELETON, framework CSS progettato per realizzare la struttura e non le interfacce. Si basa su una griglia flottante 
+        di 12 colonne che lo rende perfetto per il mobile first. Ci permette di avere stile di base predefinito della nostra pagina. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" href= "./css/index.css" /> NON SERVE LINK PERCHè STO USANDO INJECT di GULP (funzione CompileIndex)-->
+    <!-- custom:css -->
+    <!-- endinject -->
 </head>
 <body>
+    <header>
+        <div class="content">
+            <div class="brand-title">
+                <h1>Money Tracking App</h1>
+            </div>
+            <div class="header-options">
+                <p>Balance: 0</p>
+            </div>
+        </div>
+    </header>
+    <main>
+
+    </main>
+    <footer>
+
+    </footer>
+
+
     <!-- <script src="./js/models/Wallet.js"></script> -->
     <!-- <script src="./js/index.js"></script> NON SERVE, STO USANDO GULP-INJECT PER AUTOMATIZZARE PROCESSO -->
     
-    <!-- custom:utils:js -->
-    <!-- endinject -->
-    
-    <!-- custom:models:js -->
-    <!-- endinject -->
+   <!-- custom:utils:js
+        endinject
+    QUESTI 2 NON SERVONO PIù PERCHè CON BROWSERIFY UTILIZZO UNICO PUNTO D'INGRESSO con connessioni automatiche
+        custom:models:js
+        endinject -->
     
     <!-- custom:js -->
     <!-- endinject -->

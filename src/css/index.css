@@ -1,0 +1,18 @@
+header { 
+    background-color: #fafafa;  
+}
+header .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1024px;
+    height: 56px; /*altezza base, misura standard per alcuni tipi di header*/
+    margin-left: auto; /*per centrare il max-width, applico stesso margine sia a destra che a sinistra*/
+    margin-right: auto;
+}
+header h1, header p { /*nessuno all'interno dell'header deve avere dei margini*/
+    margin: 0;
+}
+header h1 {
+    font-size: 16px;
+}
