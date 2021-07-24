@@ -23,6 +23,11 @@ const paths = {
         base: "css",
         dist: "css"  //lo vogliamo all'interno della cartella css
 
+    },
+    //creo percorso per gli assets, per le icone
+    icons: {
+        base: "icons", //cartella icons
+        dist: "icons" //cartella di destinazione
     }
 }
 
@@ -77,5 +82,16 @@ module.exports = {
     },
     getCSSOutputPath: function() { //cartella di destinazione file CSS, output folder
         return this.getDistFolder() + '/' + paths.css.dist; //dist folder + il percorso css
+    },
+    //PERCORSO ICONE, BASE + PARTE DINAMICA (che ci permette di ottenere tutti gli svg all'interno della cartella, processIcons)
+    //è il percorso alla nostra cartella di icons
+    getIconsSrcPath: function(innerPath) {
+        const baseIconsPath = paths.global.src + '/' + paths.icons.base;
+        //se c'è un innerPath (parametro) mi restituisci la const base + il parametro
+        if(innerPath) { 
+            return baseIconsPath + '/' + innerPath;
+        } 
+        //altrimenti solo la const base con il percorso lì dentro definito
+        return baseIconsPath;
     }
 }

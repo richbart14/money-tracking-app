@@ -1,0 +1,15 @@
+/*FILE PER GESTIRE LO STILE DEI PULSANTI
+RACCHIUDE TUTTE LE CLASSI CHE VANNO A MODIFICARE STILE PULSANTI*/
+
+.button-icon { /*pulsante con icona svg*/
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    transition: background-size ease .3s; /*vogliamo che background-size cambi, modo ease, tempo 0.3 secondi*/
+    margin: 0; /*elimino margine inferiore che hanno di default i button in skeleton*/
+}
+.button-icon:hover { /*stato hover, quando passo sul pulsante aumenta la sua dimensione*/
+                    /*rendo animazione più fluida con transition in button-icon*/
+    background-size: 30px;
+}

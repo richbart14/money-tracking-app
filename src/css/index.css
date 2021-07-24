@@ -16,3 +16,14 @@ header h1, header p { /*nessuno all'interno dell'header deve avere dei margini*/
 header h1 {
     font-size: 16px;
 }
+main.container {
+    margin-top: 24px;
+}
+/*AMOUNT, attributo custom per il cambio dello stile dell'informazione dell'operazione.
+ uso data-op-type come attributo custom personalizzato, se expense o income cambia stile operation amount*/
+tr[data-op-type="expense"] .operation-amount { 
+    color: red;
+}
+tr[data-op-type="income"] .operation-amount {
+    color: green;
+}

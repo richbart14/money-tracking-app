@@ -33,7 +33,7 @@ const clean = function(cb) {
 }
  
 //chiamo questo series DEV (poi chiamata BUILD quando ho aggiunto modalità di produzione a modalità di sviluppo)
-const build = series(clean, viewTasks.compileIndex, assetsTasks.processCSS, assetsTasks.watchCSS, jsTasks.bundleJS, jsTasks.watchJs, viewTasks.watchIndex, serveTasks.serve); 
+const build = series(clean, viewTasks.compileIndex, assetsTasks.processIcons, assetsTasks.watchIcons, assetsTasks.processCSS, assetsTasks.watchCSS, jsTasks.bundleJS, jsTasks.watchJs, viewTasks.watchIndex, serveTasks.serve); 
                                 /*invoco metodo series su una lista di processi che vado ad inizializzare 
                                  successivamente in alcuni file separati.
                                  Un primo processo sarà quello di compilare il nostro index,

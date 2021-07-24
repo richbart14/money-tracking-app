@@ -1,0 +1,5 @@
+/*FILE CSS PER GESTIRE STILE ICONE*/
+
+.icon-delete {
+    background-image: url(/icons/delete.svg); /*icona svg (vettoriale) scaricata da flaticon.com nella cartella src/icons*/
+}

@@ -1,0 +1,5 @@
+/*lista di classi che ci aiutano in generale a modificare lo stile di qualsiasi tipo di tag*/
+/*classe no margin, margine pari a zero*/
+.no-margin { /*tolgo margine di base che hanno button e input nel search-container. serve per il loro allineamento*/
+    margin: 0;
+}

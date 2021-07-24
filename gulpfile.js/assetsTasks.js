@@ -7,6 +7,7 @@ const args = require("yargs").argv; //Libreria ARGUMENTS, ci permette di leggere
 /*INSTALLAZIONE altre LIBRERIE: npm i gulp-minify-css gulp-concat -D*/
 const minifyCSS = require("gulp-minify-css");
 const concat = require("gulp-concat"); //libreria CONCAT, ci permette di concatenare diversi file, ad esempio diversi file CSS a partire dall'index.css, e li vogliamo unire
+const svgmin = require("gulp-svgmin"); //npm i gulp-svgmin -D, libreria che ci permette di minificare svg
 const paths = require("./paths"); //IMPORTO PATHS che è il file dove gestisco i percorsi dell'applicazione
 
 //foglio di stile che deve essere MINIFICATO in caso di build di PRODUZIONE
@@ -35,8 +36,31 @@ const watchCSS = function(cb) {
     cb();
 }
 
+//PROCESSICONS PER GESTIRE ICONE CSS
+const processIcons = function() {
+    return gulp.src(paths.getIconsSrcPath("**/*.svg"), { relative: true, base: paths.getSrcFolder() }) //? facendo ciò non c'è bisogno di specificare percorso per output cartella icons in gulp.dest
+    //source con il percorso base, **/* ci permette di ottenere tutti i file contenuti in cartella e sottocartella che abbiano estensione .svg
+    .pipe(svgmin()) //pipe per eseguire minificazione svg, anche le immagini devono essere ottimizzate
+    .pipe(gulp.dest(paths.getDistFolder())); //salvo nella cartella di destinazione
+}
+
+/*AGGIUNGO WATCHER DI ICONS, tutto ciò che viene inserito nella cartella src/icons deve essere tenuto sott'occhio e deve 
+ essere aggiornata la cartella di destinazione qualora ci sia un cambio*/
+const watchIcons = function(cb) {
+    const prod = args.prod; //se è un processo di PRODuzione non voglio avviare il watch, quindi leggo argomento parametro
+    if(prod) { //se di produzione termina processo con la calback cb
+        return cb()
+    }
+    gulp.watch(paths.getIconsSrcPath("**/*"), processIcons); //gulp.watch metodo di GULP
+    //tutto ciò che vi è all'interno di icons source path
+    cb();
+}
+
+
 //ESPORTO FUNZIONI affinchè GULP POSSA TROVARLE (DEVO RICHIAMARLA NEL SERIES DI index.js)
 module.exports = {
     processCSS: processCSS,
-    watchCSS: watchCSS
+    watchCSS: watchCSS,
+    processIcons: processIcons,
+    watchIcons: watchIcons
 }

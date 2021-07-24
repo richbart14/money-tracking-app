@@ -26,8 +26,50 @@
             </div>
         </div>
     </header>
-    <main>
-
+    <main class="container"> <!--classe di SKELETON, ci permetterà di utilizzare il suo sistema GRID-->
+        <!-- Start Search container (per la ricerca della operazioni)-->
+        <div class="row d-flex v-bottom"> <!-- d-flex e v-bottom utilizzate in flex.css per allineare input e pulsante-->
+            <!--Così funziona grid-sistem Skeleton: io ho un contenitore ROW e all'interno posso inserire
+             diversi contenitori che possono avere dimensione diversa l'un l'altro-->
+            <div class="three columns">
+                <label for="search-input">Search</label> <!--etichetta, titolo del nostro input-->
+                <!--for, indica  quale input questo label viene riferito. riferito a id=search-input-->
+                <input type="text" class="no-margin" placeholder="Bill" id="search-input" /> <!--no-margin vedi helpers.css-->
+            </div>
+            <div class="two columns">
+                <button class="no-margin">Search</button> 
+            </div>
+        </div>
+        <!-- End Search container -->
+        <div class="row">
+            <div class="twelve columns"> <!--contenitore grid-sistem skeleton del 100% per un elemento-->
+                <button class="u-pull-right">New operation</button> <!--u-pull-right utilità di skeleton-->
+            </div>
+        </div>
+        <!-- Start Table container (prassi per inizio nuova sezione)-->
+        <div class="row">
+            <table class="u-full-width"> <!--utilità di skeleton, utilizzerà 100% della larghezza disponibile-->
+                <thead><!--intestazione tabella-->
+                    <tr> <!-- tr table row riga, th colonne-->
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Aggiungo manualmente operazione ESEMPIO, poi verranno generate dinamicante con Javascript-->
+                    <tr data-op-type="expense"> <!--uso data-op-type come attributo custom personalizzato, se expense o income cambia operation amount-->
+                        <td>Electricity bill</td>
+                        <td class="operation-amount">€ 200</td> 
+                        <!--AMOUNT, vogliamo che operazione si colori di rosso o verde a seconda del suo tipo spesa o entrata-->
+                        <td>12/12/2020</td>
+                        <td><button class="button button-icon icon-delete"></button></td> <!--pulsante per eliminare operazione-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- End Table container -->
     </main>
     <footer>
 
