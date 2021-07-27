@@ -1,5 +1,14 @@
 /*FILE CSS PER GESTIRE STILE ICONE*/
 
+.icon{
+    width: 18px;
+    height: 18px;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    display: inline-block;
+    vertical-align: middle; /*posiziono icona al centro*/
+}
+
 .icon-delete {
     background-image: url(/icons/delete.svg); /*icona svg (vettoriale) scaricata da flaticon.com nella cartella src/icons*/
 }
@@ -8,4 +17,7 @@
 }
 .icon-add {
     background-image: url(/icons/add.svg);
+}
+.icon-search {
+    background-image: url(/icons/search.svg);
 }

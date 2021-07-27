@@ -5,10 +5,23 @@ header .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1024px;
+    max-width: 960px;
     height: 56px; /*altezza base, misura standard per alcuni tipi di header*/
     margin-left: auto; /*per centrare il max-width, applico stesso margine sia a destra che a sinistra*/
     margin-right: auto;
+    padding: 0 20px;
+}
+/*media query header*/
+@media (min-width: 400px) {
+    header .content {
+        padding: 0;
+        width: 85%;
+    }
+}
+@media (min-width: 550px) { /*quando superiore a 550 px dovrà occupare width 80%*/
+    header .content {
+        width: 80%;
+    }
 }
 header h1, header p { /*nessuno all'interno dell'header deve avere dei margini*/
     margin: 0;
@@ -19,6 +32,10 @@ header h1 {
 main.container {
     margin-top: 24px;
 }
+table {
+    table-layout: fixed; /*rende tabella mobile-responsive, affinchè in modalità mobile rientri all'interno della pagina*/
+}
+
 /*AMOUNT, attributo custom per il cambio dello stile dell'informazione dell'operazione.
  uso data-op-type come attributo custom personalizzato, se expense o income cambia stile operation amount*/
 tr[data-op-type="expense"] .operation-amount { 

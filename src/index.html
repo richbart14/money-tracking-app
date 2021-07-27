@@ -28,20 +28,18 @@
     </header>
     <main class="container"> <!--classe di SKELETON, ci permetterà di utilizzare il suo sistema GRID-->
         <!-- Start Search container (per la ricerca della operazioni)-->
-        <div class="row d-flex v-bottom"> <!-- d-flex e v-bottom utilizzate in flex.css per allineare input e pulsante-->
+        <div class="row"> <!-- d-flex e v-bottom utilizzate in flex.css per allineare input e pulsante. classi eliminate perchè ho usato positioning pulsante search dentro input search-->
             <!--Così funziona grid-sistem Skeleton: io ho un contenitore ROW e all'interno posso inserire
              diversi contenitori che possono avere dimensione diversa l'un l'altro-->
-            <div class="three columns">
-                <label for="search-input">Search</label> <!--etichetta, titolo del nostro input-->
+            <div class="custom-input-container">
+                <label for="search-input">Search</label> <!--etichetta Search, titolo del nostro input-->
                 <!--for, indica  quale input questo label viene riferito. riferito a id=search-input-->
-                <input type="text" class="no-margin" placeholder="Bill" id="search-input" /> <!--no-margin vedi helpers.css-->
-            </div>
-            <div class="two columns">
-                <button class="no-margin">Search</button> 
-            </div>
+                <input type="text" placeholder="Bill" id="search-input" /> <!--no-margin vedi helpers.css-->
+                <button class="button-icon icon-search"></button> <!--class no-margin ml-1 eliminata-->
+            </div>           
         </div>
         <!-- End Search container -->
-        <div class="row">
+        <div class="row mt-2">
             <div class="twelve columns"> <!--contenitore grid-sistem skeleton del 100% per un elemento-->
                 <button class="u-pull-right">New operation</button> <!--u-pull-right utilità di skeleton-->
             </div>
@@ -54,7 +52,7 @@
                         <th>Description</th>
                         <th>Amount</th>
                         <th>Date</th>
-                        <th>Options</th>
+                        <th aria-label="Options"></th> <!--aria-label, ha questo valore Options ma non si vede-->
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +62,8 @@
                         <td class="operation-amount">€ 200</td> 
                         <!--AMOUNT, vogliamo che operazione si colori di rosso o verde a seconda del suo tipo spesa o entrata-->
                         <td>12/12/2020</td>
-                        <td><button class="button button-icon button-animated icon-delete"></button></td> <!--pulsante per eliminare operazione-->
+                        <td class="align-text-center"><button class="button button-icon button-animated icon-delete"></button></td> <!--pulsante per eliminare operazione-->
+                        <!--classe negli helpers-->
                     </tr>
                 </tbody>
             </table>
@@ -73,7 +72,7 @@
         <!-- Start Modal container -->
         <!--il nostro avrà una classe che si incaricherà di cambiare la visibilità del nostro popup da visibile a non visibile,
             se lo vogliamo mostrare o meno. Verrà mostrato quando l'utente cliccherà sul pulsante New operation.-->
-        <div class="modal">
+        <div class="modal hide">
             <div class="modal__header row"> <!--row è classe di skeleton-->
                 <h2>Add operation</h2>
                 <button class="button button-icon button-animated icon-close modal__header__action"></button>

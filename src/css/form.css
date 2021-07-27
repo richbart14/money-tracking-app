@@ -9,3 +9,22 @@ form .custom-input { /*stesso stile anche quando non è focus ma 1 px, al focus 
     border-radius: 0; /*elimino arrotondamento input*/
     border-bottom: 1px solid #989898;
 }
+.custom-input-container {/*pulsante search dentro input search -1*/
+    position: relative;
+    width: 250px;
+}
+.custom-input-container input {
+    width: 250px;
+}
+.custom-input-container .button-icon { /*pulsante search dentro input search -2*/
+    position: absolute;
+    right: 0;
+    padding: 0 16px;
+    border: 1px solid #D1D1D1;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
