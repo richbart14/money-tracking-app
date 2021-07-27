@@ -24,11 +24,12 @@ RACCHIUDE TUTTE LE CLASSI CHE VANNO A MODIFICARE STILE PULSANTI*/
     border-color: var(--success-color);
 }
 .button-float { /*sposto in basso pulsante per nuova operazione*/
+    /* per dimensioni utilizzate nel material-design consultare sito material.io/components/ */
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 48px;
-    height: 48px;
+    bottom: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
     border-radius: 100px;
     padding: 0;
     border: 1px solid var(--primary-color); /*colore nero gestito in palette.css*/

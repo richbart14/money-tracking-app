@@ -15,6 +15,9 @@
 .icon-close {
     background-image: url(/icons/cancel.svg);
 }
+.icon-close-white {
+    background-image: url(/icons/cancel-white.svg);
+}
 .icon-add {
     background-image: url(/icons/add.svg);
 }

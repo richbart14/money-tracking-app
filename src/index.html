@@ -85,7 +85,7 @@
                         <input id="amount-input" class="custom-input u-full-width" placeholder="10" type="number" />
                         <!--u-full-width utilità di skeleton, utilizzerà 100% della larghezza disponibile-->
                         <p class="label-error">At least more than zero</p>
-                        <!--TOAST: messaggi di errore relativi ad ogni input. (vedi classe label-error in form.css)
+                        <!--MESSAGGI DI ERRORE relativi ad ogni input. (vedi classe label-error in form.css)
                             Testo che ci permette di comunicare l'errore all'utente, quando l'operazione di inserimento
                             è andata a buon fine o meno. In questo caso indica che l'importo è inferiore o pari a zero-->
                     </div>
@@ -104,6 +104,15 @@
         <!-- End Modal container -->
         <button class="button-float button-icon icon-add"></button> <!--u-pull-right utilità di skeleton.-->
                     <!--Pulsante NEW OPERATION, button-float sposto pulsante in basso. Vedi buttons.css-->
+
+        <!-- Start Toast container -->
+        <!-- TOAST, ci permette di comunicare l'errore all'utente, se l'operazione è andata a buon fine o meno. 
+            Non rispetta l'ordine del DOM, avrà una posizione fissa. -->    
+        <div class="toast">
+            <p class="toast__message">Operation added succesfully (messaggio di prova)</p>
+            <span class="icon icon-close-white"></span>
+        </div>
+        <!-- End Toast Container -->
     </main>
     <footer>
 
