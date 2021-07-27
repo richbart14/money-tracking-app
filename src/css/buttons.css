@@ -16,12 +16,12 @@ RACCHIUDE TUTTE LE CLASSI CHE VANNO A MODIFICARE STILE PULSANTI*/
     background-size: 30px;
 }
 .button-error {
-    color: red;
-    border-color: red;
+    color: var(--error-color);
+    border-color: var(--error-color);
 }
 .button-success {
-    color: green;
-    border-color: green;
+    color: var(--success-color);
+    border-color: var(--success-color);
 }
 .button-float { /*sposto in basso pulsante per nuova operazione*/
     position: fixed;
@@ -31,5 +31,5 @@ RACCHIUDE TUTTE LE CLASSI CHE VANNO A MODIFICARE STILE PULSANTI*/
     height: 48px;
     border-radius: 100px;
     padding: 0;
-    border: 1px solid black;
+    border: 1px solid var(--primary-color); /*colore nero gestito in palette.css*/
 }

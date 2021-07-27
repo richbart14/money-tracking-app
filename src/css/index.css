@@ -39,8 +39,8 @@ table {
 /*AMOUNT, attributo custom per il cambio dello stile dell'informazione dell'operazione.
  uso data-op-type come attributo custom personalizzato, se expense o income cambia stile operation amount*/
 tr[data-op-type="expense"] .operation-amount { 
-    color: red;
+    color: var(--error-color);
 }
 tr[data-op-type="income"] .operation-amount {
-    color: green;
+    color: var(--success-color);
 }

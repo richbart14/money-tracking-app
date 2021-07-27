@@ -84,10 +84,15 @@
                         <label for="amount-input">Amount</label>
                         <input id="amount-input" class="custom-input u-full-width" placeholder="10" type="number" />
                         <!--u-full-width utilità di skeleton, utilizzerà 100% della larghezza disponibile-->
+                        <p class="label-error">At least more than zero</p>
+                        <!--TOAST: messaggi di errore relativi ad ogni input. (vedi classe label-error in form.css)
+                            Testo che ci permette di comunicare l'errore all'utente, quando l'operazione di inserimento
+                            è andata a buon fine o meno. In questo caso indica che l'importo è inferiore o pari a zero-->
                     </div>
                     <div class="row">
                         <label for="description-input">Description</label>
                         <input id="description-input" class="custom-input u-full-width" placeholder="Bill" type="text" />
+                        <p class="label-error">At least more one character</p> <!--inserisci almeno un carattere-->
                     </div>
                     <div class="row">
                         <button class="button-success">Add Income</button>
