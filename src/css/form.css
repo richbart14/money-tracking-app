@@ -1,0 +1,11 @@
+/*foglio per dare stile ai form*/
+
+form .custom-input:focus {
+    border: 0;
+    border-bottom: 2px solid #989898;
+}
+form .custom-input { /*stesso stile anche quando non è focus ma 1 px, al focus diventa 2*/
+    border: 0;
+    border-radius: 0; /*elimino arrotondamento input*/
+    border-bottom: 1px solid #989898;
+}

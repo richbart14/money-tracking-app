@@ -3,3 +3,9 @@
 .icon-delete {
     background-image: url(/icons/delete.svg); /*icona svg (vettoriale) scaricata da flaticon.com nella cartella src/icons*/
 }
+.icon-close {
+    background-image: url(/icons/cancel.svg);
+}
+.icon-add {
+    background-image: url(/icons/add.svg);
+}

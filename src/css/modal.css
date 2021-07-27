@@ -1,0 +1,22 @@
+.modal {
+    position: fixed; /*poition fixed prevede inseirmento manuale di top left ecc*/
+    top: 0; /*stiamo dicendo che deve occupare tutto lo schermo*/
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    z-index: 1; /*permette di gestire ordine in cui devono apparire gli elementi dopo aver applicato position: fixed*/
+    display: flex; /*per visualizzare contenuto al centro*/
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /*si incarica di gestire direzione del nostro flex*/
+}
+.modal__header__action { /*posiziono X in alto a destra*/
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
+.modal__main {
+    margin-top: 2rem; /*rem, unità di grandezza relativa al padre più esterno, che è l'html, 2 volte il font-size più alto*/
+                        /*em, invece è unità di grandezza relativa al padre più vicino*/
+}
