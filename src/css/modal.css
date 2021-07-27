@@ -10,6 +10,12 @@
     align-items: center;
     justify-content: center;
     flex-direction: column; /*si incarica di gestire direzione del nostro flex*/
+    transition: all ease .5s;
+}
+.modal.hide {
+    opacity: 0;
+    /*transform: scale(0); utilizzo per ora solo transizione + opacity*/
+    /*display: none; anzichè utilizzare il display none che lo chiude di colpo utilizzo transizione + transform*/
 }
 .modal__header__action { /*posiziono X in alto a destra*/
     position: absolute;
