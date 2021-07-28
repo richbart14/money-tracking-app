@@ -23,14 +23,21 @@ RACCHIUDE TUTTE LE CLASSI CHE VANNO A MODIFICARE STILE PULSANTI*/
     color: var(--success-color);
     border-color: var(--success-color);
 }
+.button-float-container { /*serve per allineare il button float all'header*/
+    position: fixed;
+    bottom: 16px; 
+    padding: 0;
+    text-align: right;
+}
+@media (max-width: 400px) { /*media query per sistemare pulsante in versione mobile*/
+    .button-float-container {
+        right: 16px;
+    }
+}
 .button-float { /*sposto in basso pulsante per nuova operazione*/
     /* per dimensioni utilizzate nel material-design consultare sito material.io/components/ */
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
     width: 56px;
     height: 56px;
     border-radius: 100px;
-    padding: 0;
     border: 1px solid var(--primary-color); /*colore nero gestito in palette.css*/
 }

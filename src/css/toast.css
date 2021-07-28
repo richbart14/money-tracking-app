@@ -18,6 +18,9 @@
 .toast.show { /*PER FAR APPARIRE MESSAGGIO: se toast ha anche attaccato la classe .show perchè fa parte di toast assegnamo bottom 20 px*/
     bottom: 20px;
 }
+.toast.toast--error { /*SE è TOST con messaggio di errore cambia colore*/
+    background-color: var(--error-color);
+}
 .toast .toast__message {
     margin: 0; /*non deve avere margin inferiore*/
     display: inline-block; /*ci permette di allineare sulla stessa riga <P> con icon*/
