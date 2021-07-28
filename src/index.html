@@ -5,16 +5,137 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Money Tracking App</title>
+
+    <!--Libreria NORMALIZE, ci permette di equiparare lo stile di qualsiasi browser, per ottenere stesso risultato su ogni browser-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <!--Libreria SKELETON, framework CSS progettato per realizzare la struttura e non le interfacce. Si basa su una griglia flottante 
+        di 12 colonne che lo rende perfetto per il mobile first. Ci permette di avere stile di base predefinito della nostra pagina. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" href= "./css/index.css" /> NON SERVE LINK PERCHè STO USANDO INJECT di GULP (funzione CompileIndex)-->
+    <!-- custom:css -->
+    <!-- endinject -->
 </head>
 <body>
+    <header>
+        <div class="content">
+            <div class="brand-title">
+                <h1>Money Tracking App</h1>
+            </div>
+            <div class="header-options">
+                <p>Balance: 0</p>
+            </div>
+        </div>
+    </header>
+    <main class="container"> <!--classe di SKELETON, ci permetterà di utilizzare il suo sistema GRID-->
+        <!-- Start Search container (per la ricerca della operazioni)-->
+        <div class="row"> <!-- d-flex e v-bottom utilizzate in flex.css per allineare input e pulsante. classi eliminate perchè ho usato positioning pulsante search dentro input search-->
+            <!--Così funziona grid-sistem Skeleton: io ho un contenitore ROW e all'interno posso inserire
+             diversi contenitori che possono avere dimensione diversa l'un l'altro-->
+            <div class="custom-input-container">
+                <label for="search-input">Search</label> <!--etichetta Search, titolo del nostro input-->
+                <!--for, indica  quale input questo label viene riferito. riferito a id=search-input-->
+                <input type="text" placeholder="Bill" id="search-input" /> <!--no-margin vedi helpers.css-->
+                <button class="button-icon icon-search"></button> <!--class no-margin ml-1 eliminata-->
+            </div>           
+        </div>
+        <!-- End Search container -->
+                                    <!--<div class="row mt-2">
+                                        <div class="twelve columns">  contenitore grid-sistem skeleton del 100% per un elemento
+                                        ELIMINATO   
+                                        </div>
+                                    </div>-->
+        <!-- Start Table container (prassi per inizio nuova sezione)-->
+        <div class="row">
+            <table class="u-full-width"> <!--utilità di skeleton, utilizzerà 100% della larghezza disponibile-->
+                <thead><!--intestazione tabella-->
+                    <tr> <!-- tr table row riga, th colonne-->
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th aria-label="Options"></th> <!--aria-label, ha questo valore Options ma non si vede-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Aggiungo manualmente operazione ESEMPIO, poi verranno generate dinamicante con Javascript-->
+                    <tr data-op-type="expense"> <!--uso data-op-type come attributo custom personalizzato, se expense o income cambia operation amount-->
+                        <td>Electricity bill</td>
+                        <td class="operation-amount">€ 200</td> 
+                        <!--AMOUNT, vogliamo che operazione si colori di rosso o verde a seconda del suo tipo spesa o entrata-->
+                        <td>12/12/2020</td>
+                        <td class="align-text-center"><button class="button button-icon button-animated icon-delete"></button></td> <!--pulsante per eliminare operazione-->
+                        <!--classe negli helpers-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- End Table container -->
+        <!-- Start Modal container -->
+        <!--il nostro avrà una classe che si incaricherà di cambiare la visibilità del nostro popup da visibile a non visibile,
+            se lo vogliamo mostrare o meno. Verrà mostrato quando l'utente cliccherà sul pulsante New operation.-->
+        <div class="modal hide">
+            <div class="modal__header row"> <!--row è classe di skeleton-->
+                <h2>Add operation</h2>
+                <button class="button button-icon button-animated icon-close modal__header__action"></button>
+                <!--modal header action è classe che uso per il positioning dell'icona X-->
+            </div>
+            <div class="modal__main"> <!-- con i 2 trattini bassi __ identifico sottosezione, prassi CSS. Modal sarebbe il blocco.-->
+                <form>
+                    <div class="row">
+                        <label for="amount-input">Amount</label>
+                        <input id="amount-input" class="custom-input u-full-width" placeholder="10" type="number" />
+                        <!--u-full-width utilità di skeleton, utilizzerà 100% della larghezza disponibile-->
+                        <p class="label-error">At least more than zero</p>
+                        <!--MESSAGGI DI ERRORE relativi ad ogni input. (vedi classe label-error in form.css)
+                            Testo che ci permette di comunicare l'errore all'utente, quando l'operazione di inserimento
+                            è andata a buon fine o meno. In questo caso indica che l'importo è inferiore o pari a zero-->
+                    </div>
+                    <div class="row">
+                        <label for="description-input">Description</label>
+                        <input id="description-input" class="custom-input u-full-width" placeholder="Bill" type="text" />
+                        <p class="label-error">At least more one character</p> <!--inserisci almeno un carattere-->
+                    </div>
+                    <div class="row">
+                        <button class="button-success">Add Income</button>
+                        <button class="button-error">Add Expense</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Modal container -->
+        
+        <!-- Start Floating Button container -->
+        <div class="container button-float-container">
+            <!--classe container ci permetterà di avere media query create da skeleton che limitano larghezza contenitore-->
+            <button class="button-float button-icon icon-add"></button> <!--u-pull-right utilità di skeleton.-->
+                    <!--Pulsante NEW OPERATION, button-float sposto pulsante in basso. Vedi buttons.css-->
+        </div>            
+        <!-- End Floating Button container -->
+
+        <!-- Start Toast container -->
+        <!-- TOAST, ci permette di comunicare l'errore all'utente, se l'operazione è andata a buon fine o meno. 
+            Non rispetta l'ordine del DOM, avrà una posizione fissa. -->    
+        <div class="toast">
+            <p class="toast__message">Operation added succesfully (messaggio di prova)</p>
+            <span class="icon icon-close-white"></span>
+        </div>
+        <!-- End Toast Container -->
+    </main>
+    <footer>
+        <div class="container">
+            <span>Developed by Ricki</span>
+        </div>
+
+    </footer>
+
+
     <!-- <script src="./js/models/Wallet.js"></script> -->
     <!-- <script src="./js/index.js"></script> NON SERVE, STO USANDO GULP-INJECT PER AUTOMATIZZARE PROCESSO -->
     
-    <!-- custom:utils:js -->
-    <!-- endinject -->
-    
-    <!-- custom:models:js -->
-    <!-- endinject -->
+   <!-- custom:utils:js
+        endinject
+    QUESTI 2 NON SERVONO PIù PERCHè CON BROWSERIFY UTILIZZO UNICO PUNTO D'INGRESSO con connessioni automatiche
+        custom:models:js
+        endinject -->
     
     <!-- custom:js -->
     <!-- endinject -->

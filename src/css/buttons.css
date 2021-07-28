@@ -1,0 +1,43 @@
+/*FILE PER GESTIRE LO STILE DEI PULSANTI
+RACCHIUDE TUTTE LE CLASSI CHE VANNO A MODIFICARE STILE PULSANTI*/
+
+.button-icon { /*pulsante con icona svg*/
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    margin: 0; /*elimino margine inferiore che hanno di default i button in skeleton*/
+}
+.button-animated {
+    transition: background-size ease .3s; /*vogliamo che background-size cambi, modo ease, tempo 0.3 secondi*/
+}
+.button-icon:hover { /*stato hover, quando passo sul pulsante aumenta la sua dimensione*/
+                    /*rendo animazione più fluida con transition in button-icon*/
+    background-size: 30px;
+}
+.button-error {
+    color: var(--error-color);
+    border-color: var(--error-color);
+}
+.button-success {
+    color: var(--success-color);
+    border-color: var(--success-color);
+}
+.button-float-container { /*serve per allineare il button float all'header*/
+    position: fixed;
+    bottom: 64px; 
+    padding: 0;
+    text-align: right;
+}
+@media (max-width: 400px) { /*media query per sistemare pulsante in versione mobile*/
+    .button-float-container {
+        right: 16px;
+    }
+}
+.button-float { /*sposto in basso pulsante per nuova operazione*/
+    /* per dimensioni utilizzate nel material-design consultare sito material.io/components/ */
+    width: 56px;
+    height: 56px;
+    border-radius: 100px;
+    border: 1px solid var(--primary-color); /*colore nero gestito in palette.css*/
+}

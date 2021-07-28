@@ -139,3 +139,10 @@ class Wallet {
         init(); //invoco funzione INIT alla fine di tutte le dichiarazioni affinchè il wallet venga inizializzato correttamente
     }
 }
+
+
+//ESPORTO WALLET E WALLEERRORS, SERVE PER BROWSERIFY
+module.exports = {
+    Wallet: Wallet,
+    WalletErrors: WalletErrors
+}
