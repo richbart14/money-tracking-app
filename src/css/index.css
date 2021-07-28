@@ -1,4 +1,4 @@
-header { 
+header, footer { 
     background-color: #fafafa;  
 }
 header .content {
@@ -11,17 +11,13 @@ header .content {
     margin-right: auto;
     padding: 0 20px;
 }
-/*media query header*/
-@media (min-width: 400px) {
-    header .content {
-        padding: 0;
-        width: 85%;
-    }
+footer {
+    height: 56px; /*altezza pari a quella dell'header*/
 }
-@media (min-width: 550px) { /*quando superiore a 550 px dovrà occupare width 80%*/
-    header .content {
-        width: 80%;
-    }
+footer .container {
+    display: flex;
+    height: 100%;
+    align-items: center;
 }
 header h1, header p { /*nessuno all'interno dell'header deve avere dei margini*/
     margin: 0;
@@ -29,7 +25,12 @@ header h1, header p { /*nessuno all'interno dell'header deve avere dei margini*/
 header h1 {
     font-size: 16px;
 }
-main.container {
+main.container { /*applico min-height al main per spingere footer verso il basso*/
+    /*min-height deve essere pari al 100% dell'altezza meno le altezze di header e footer e margin-top del main
+    (56 + 56 + 24 = 136)
+    calc(100vh - 136px) serve per forzare che l'altezza del main sia sempre pari al 100% dell'altezza meno queste 2 dimensioni*/
+    min-height: calc(100vh - 136px); /*vh viewport-height, serve per calcolare una dimensione in base all'altezza dello schermo,
+                                        o anche alla larghezza utilizzando il viewport width*/
     margin-top: 24px;
 }
 table {
@@ -43,4 +44,17 @@ tr[data-op-type="expense"] .operation-amount {
 }
 tr[data-op-type="income"] .operation-amount {
     color: var(--success-color);
+}
+
+/*media query header*/
+@media (min-width: 400px) {
+    header .content {
+        padding: 0;
+        width: 85%;
+    }
+}
+@media (min-width: 550px) { /*quando superiore a 550 px dovrà occupare width 80%*/
+    header .content {
+        width: 80%;
+    }
 }
