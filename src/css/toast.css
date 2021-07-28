@@ -1,0 +1,28 @@
+.toast {
+    position: fixed; /*posizione deve essere fissa sempre nello stesso punto e non potrà muoversi in relazione al contenuto della pagina*/
+    left: calc(50% - 150px); /*calc di permette di effettuare calcoli all'interno del foglio di stile.
+                    Renderizzo metà della sua larghezza nella parte sinistra dello schermo e metà nella parte destra.
+                    Divido per 2 la dimensione di quello che voglio centrare.*/
+    bottom: -100px;
+    width: 300px;
+    background-color: var(--success-color);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center; /*inserisco il tutto al centro*/
+    box-sizing: border-box; /*con l'aggiutna del padding ho aumentato dimensione contenitore da 300 a 324 (padding 12+12)
+                            Per includere padding all'interno del calcolo totale del width dobbiamo usare box-sizing.
+                            Tutto ciò che riguarda padding e margini viene così inserito nel calcolo del width.*/
+    transition: .5s ease bottom; /*mezzo secondo, vogliamo cambiare solo il bottom*/
+}
+.toast.show { /*PER FAR APPARIRE MESSAGGIO: se toast ha anche attaccato la classe .show perchè fa parte di toast assegnamo bottom 20 px*/
+    bottom: 20px;
+}
+.toast.toast--error { /*SE è TOST con messaggio di errore cambia colore*/
+    background-color: var(--error-color);
+}
+.toast .toast__message {
+    margin: 0; /*non deve avere margin inferiore*/
+    display: inline-block; /*ci permette di allineare sulla stessa riga <P> con icon*/
+    margin-right: 16px; /*assegno margine laterale affinchè ci sia distanza con l'icona*/
+}

@@ -1,0 +1,40 @@
+/*foglio per dare stile ai form*/
+
+form .custom-input:focus {
+    border: 0;
+    border-bottom: 2px solid var(--grey-color);
+}
+form .custom-input { /*stesso stile anche quando non è focus ma 1 px, al focus diventa 2*/
+    border: 0;
+    border-radius: 0; /*elimino arrotondamento input*/
+    border-bottom: 1px solid var(--grey-color);
+}
+.custom-input-container {/*pulsante search dentro input search -1*/
+    position: relative;
+    width: 250px;
+}
+.custom-input-container input {
+    width: 250px;
+}
+.custom-input-container .button-icon { /*pulsante search dentro input search -2*/
+    position: absolute;
+    right: 0;
+    padding: 0 16px;
+    border: 1px solid var(--grey-color);
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+form .label-error { /*classe per messaggi di errore TOAST nel form*/
+    display: none; /*di base non viene mostrato*/
+    color: var(--error-color);
+}
+form .has-error input { /*se il form ha un errore avrà bordo di colore rosso*/
+    border-bottom-color: var(--error-color);
+}
+form .has-error .label-error { /*se però ha un padre la cui classe è has-error anche label-error verrà mostrato*/
+    display: block;
+}

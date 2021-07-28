@@ -16,6 +16,7 @@ const compileIndex = function() {
     che andrò ad utilizzare nel primo pipe con metodo inject */
     //const jsIndex = gulp.src("./src/js/index.js");
     const jsIndex = gulp.src(paths.getJsEntryPath()); //UTILIZZO PERCORSI GENERATI CON PATH E NON LA STRINGA
+    const cssIndex = gulp.src(paths.getCSSEntryPath());
     //const utilsIndex = gulp.src(paths.getJsSrcPath("/utils.js"));
     //const modelsIndex = gulp.src(paths.getJsSrcPath("/models/Wallet.js"));
 
@@ -24,6 +25,7 @@ const compileIndex = function() {
     //return gulp.src("./src/index.html")
     return gulp.src(paths.getHTMLEntryPath()) //UTILIZZO PERCORSI GENERATI CON PATH E NON LA STRINGA
     //definisco cosa voglio fare con questo index.html utilizzando i metodi pipe()
+        .pipe(inject(cssIndex, { relative: true, name: "custom" })) //aggiungo un CUSTOM anche per quanto riguarda il CSS, viene così inserito nell'html
         .pipe(inject(jsIndex, { relative: true, name: "custom" })) //lo inserisco all'interno di una sezione che chiamo CUSTOM
         /*inserisco sezione in index.html attraverso <!-- custom:js --> <!-- endinject -->
                                                           nome sezione:tipo di file

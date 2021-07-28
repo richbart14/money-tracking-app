@@ -1,0 +1,8 @@
+/*File di gestione dei nostri colori. Scala di colori della nostra pagina*/
+
+:root {
+    --primary-color: #000;
+    --error-color: #AA3939;
+    --success-color: #567714;
+    --grey-color: #989898;
+}
