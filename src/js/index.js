@@ -44,6 +44,25 @@
         return wallet.getOperations(); //accedo al metodo inserito all'interno del costruttore
     }
 
+    const toggleModal = function() { //FUNZIONE CAMBIO VISIBILITà PANNELLO ADD OPERATION 
+        const modalComponent = document.getElementById('modal'); //PRENDO modal container
+        if(modalComponent){ //IF controllo che esista
+            const isHidden = modalComponent.classList.contains('hide'); //controllo modal container contenga classe 'hide'
+            //contains restituisce booleano true/false, salvo risultato nella costante isHidden
+            if(isHidden) { //se true, se classe hide c'è, se è nascosto il pannello
+                modalComponent.classList.remove('hide'); //lo andiamo a mostrare rimuovendo la classe hide
+                //se qua inserisco return posso evitare di concatenare un else
+            }else{
+                modalComponent.classList.add('hide'); //altrimenti lo andiamo a mostrare
+            }
+        }
+    }
+    window.toggleModal = toggleModal; /*aggiungo funzione toggleModal al window perchè deve avere scope globale e perchè 2 pulsanti devono
+                                        accedere alla stessa funzione, + e x, apri e chiudi pannello, in questo modo velocizzo
+                                        per non ripetere stessa operazione di addeventlistener per entrambi i pulsanti.
+                                        Se sappiamo che l'evento si deve ripetere anche per altri elementi gestire il tutto
+                                        con l'addEventListener diventa più complicato.*/
+
     /*inserisco creazione del nostro wallet, che avverrà solo quando il nostro DOM sarà pronto*/
     window.addEventListener('DOMContentLoaded', function() {
         wallet = new Wallet(); //creazione variabile wallet che sarà la nuova istanza del costruttore Wallet

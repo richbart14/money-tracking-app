@@ -72,11 +72,12 @@
         <!-- Start Modal container -->
         <!--il nostro avrà una classe che si incaricherà di cambiare la visibilità del nostro popup da visibile a non visibile,
             se lo vogliamo mostrare o meno. Verrà mostrato quando l'utente cliccherà sul pulsante New operation.-->
-        <div class="modal hide">
+        <div class="modal hide" id="modal"> <!--AGGIUNGO ID MODAL PER RICIHIAMARE MODAL CONTAINER IN INDEX.JS TOGGLEMODAL()-->
             <div class="modal__header row"> <!--row è classe di skeleton-->
                 <h2>Add operation</h2>
-                <button class="button button-icon button-animated icon-close modal__header__action"></button>
+                <button class="button button-icon button-animated icon-close modal__header__action" onclick="toggleModal()"></button>
                 <!--modal header action è classe che uso per il positioning dell'icona X-->
+                <!--invoco funzione TOGGLEMODAL definità in index.js, toggle visibilità del pannello add operation-->
             </div>
             <div class="modal__main"> <!-- con i 2 trattini bassi __ identifico sottosezione, prassi CSS. Modal sarebbe il blocco.-->
                 <form>
@@ -106,8 +107,9 @@
         <!-- Start Floating Button container -->
         <div class="container button-float-container">
             <!--classe container ci permetterà di avere media query create da skeleton che limitano larghezza contenitore-->
-            <button class="button-float button-icon icon-add"></button> <!--u-pull-right utilità di skeleton.-->
-                    <!--Pulsante NEW OPERATION, button-float sposto pulsante in basso. Vedi buttons.css-->
+            <button class="button-float button-icon icon-add" onclick="toggleModal()"></button> <!--u-pull-right utilità di skeleton.-->
+                <!--ONCLICK, dichiarazione inline dell'evento, richiamo funzione toggleModal. FUNZIONE IN INDEX.JS-->    
+                <!--Pulsante NEW OPERATION, button-float sposto pulsante in basso. Vedi buttons.css-->
         </div>            
         <!-- End Floating Button container -->
 
