@@ -80,11 +80,23 @@
                 <!--invoco funzione TOGGLEMODAL definità in index.js, toggle visibilità del pannello add operation-->
             </div>
             <div class="modal__main"> <!-- con i 2 trattini bassi __ identifico sottosezione, prassi CSS. Modal sarebbe il blocco.-->
-                <form>
+                <form onsubmit="addOperation(event)">
+                    <!--gestisco il form invocando l' ONSUBMIT. Per effettuare un submit il fomr deve avere un pulsante o un input che sia di tipo SUBMIT-->
                     <div class="row">
                         <label for="amount-input">Amount</label>
-                        <input id="amount-input" class="custom-input u-full-width" placeholder="10" type="number" />
+                        <input id="amount-input" 
+                            class="custom-input u-full-width" 
+                            placeholder="10" 
+                            type="number" 
+                            min="0.01" 
+                            name="amount"
+                            step="0.01" 
+                            required />
                         <!--u-full-width utilità di skeleton, utilizzerà 100% della larghezza disponibile-->
+                        <!-- REQUIRED per validare input con html, il submit non viene invocato fin quando questo non viene riempito con un valore-->
+                        <!-- MIN attributo per gestire numeri, parte da 0, per evitare inserimento numeri negativi. minimo 1 centesimo-->
+                        <!-- STEP, attributo per salire di 10 numeri alla volta cliccando sulla freccetta-->
+                        <!-- NAME, nome dell'input, chiave di quel valore, per leggerlo tramite il metodo event.target-->
                         <p class="label-error">At least more than zero</p>
                         <!--MESSAGGI DI ERRORE relativi ad ogni input. (vedi classe label-error in form.css)
                             Testo che ci permette di comunicare l'errore all'utente, quando l'operazione di inserimento
@@ -92,12 +104,21 @@
                     </div>
                     <div class="row">
                         <label for="description-input">Description</label>
-                        <input id="description-input" class="custom-input u-full-width" placeholder="Bill" type="text" />
+                        <input id="description-input" 
+                            class="custom-input u-full-width" 
+                            placeholder="Bill" 
+                            type="text" 
+                            minlength="1" 
+                            name="description"
+                            required />
+                        <!--MINLENGTH, attributo per lunghezza minima descrizione-->
                         <p class="label-error">At least more one character</p> <!--inserisci almeno un carattere-->
                     </div>
                     <div class="row">
-                        <button class="button-success">Add Income</button>
-                        <button class="button-error">Add Expense</button>
+                        <button class="button-success" type="submit" data-type="IN">Add Income</button>
+                        <button class="button-error" type="submit" data-type="OUT">Add Expense</button>
+                        <!--aggiungo attributo data-type per distinguere/differenziare tipo operazione se income o expense
+                        IN e OUT sono i valori impostati negli enumeratori in Wallet.js che vengono interpretati all'interno di addOperation-->
                     </div>
                 </form>
             </div>

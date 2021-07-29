@@ -14,9 +14,33 @@
     const Wallet = require("./models/Wallet").Wallet; //require di Wallet, serve per BROWSERIFY
 
     let wallet;
-    const addOperation = function(op) {
-        try {
-            wallet.addOperation(op); //vedo op in entrata e la passo ad addOperation nel costruttore wallet
+
+    const resetFormFields = function(form) { //funzione per resettare form di Aggiunta Operazione ADD OPERATION
+        //leggo i valori dal form
+        const amountInput = form.amount; 
+        const descriptionInput = form.description; 
+        //porto i rispettivi valori a 0 e vuoto ''
+        amountInput.value = 0;
+        descriptionInput.value = '';
+    }
+
+    const addOperation = function(ev) { //ricevo l'evento
+        ev.preventDefault(); //fermo esecuzione standard del form. termino la propagazione. metodo dell'oggetto event
+        const submitButton = ev.submitter;//leggo il submit, contenuto all'interno di ev.submitter
+        const type = submitButton.getAttribute('data-type'); //leggo il suo tipo, prendo il suo attributo data-type (per vedere se è IN o OUT)
+        //queste 2 variabili CI RESTITUISCONO I VALORI IMMESSI IN QUEGLI INPUT
+        const amountInput = ev.target.amount; //leggo il valore dell'amount con metodo target di event passando il NAME "amount" del form
+        const descriptionInput = ev.target.description; 
+        //COSTRUISCO L'OPERAZIONE
+        const operation = {
+            amount: amountInput.value,
+            description: descriptionInput.value,
+            type,
+        };
+        try { //aggiungo operazione al WALLET, OPERAZIONE VIENE AGGIUNTA NEL LOCAL STORAGE
+            wallet.addOperation(operation); //vedo op in entrata e la passo ad addOperation nel costruttore wallet
+            toggleModal(); //se operazione va a buon fine richiamo toggleModal per chiudere il pannello di aggiunta operazione
+            resetFormFields(ev.target); //chiamo funzione per resettare il form
         } catch(e) {
             console.error(e);
         }
@@ -57,6 +81,8 @@
             }
         }
     }
+
+    window.addOperation = addOperation;
     window.toggleModal = toggleModal; /*aggiungo funzione toggleModal al window perchè deve avere scope globale e perchè 2 pulsanti devono
                                         accedere alla stessa funzione, + e x, apri e chiudi pannello, in questo modo velocizzo
                                         per non ripetere stessa operazione di addeventlistener per entrambi i pulsanti.
