@@ -57,6 +57,7 @@
         };
         try { //aggiungo operazione al WALLET, OPERAZIONE VIENE AGGIUNTA NEL LOCAL STORAGE
             wallet.addOperation(operation); //vedo op in entrata e la passo ad addOperation nel costruttore wallet
+            updateBalance(); //invoco funzione per aggiornare il saldo quando aggiungo un operazione
             toggleModal(); //se operazione va a buon fine richiamo toggleModal per chiudere il pannello di aggiunta operazione
             ev.target.reset(); //resetto i campi del form con metodo RESET di html 5 per i form
             showMessage('Operation added succesfully!', Enums.SnackbarTypes.SUCCESS); //chiamo funzione con messaggio per il toast
@@ -102,6 +103,14 @@
         }
     }
 
+    const updateBalance = function() { //FUNZIONE PER AGGIORNARE IL SALDO
+        const balanceElement = document.getElementById('balance-box'); //prendo il balance element
+        if (!balanceElement) { //controllo che esista
+            return; //altrimenti termino l'istruzione
+        } //una volta trovato il balace-element imposto il suo text content che è pari alla funzione getBalance
+        balanceElement.textContent = getBalance();
+    }
+
     window.hideSnackbar = hideSnackbar;
     window.addOperation = addOperation;
     window.toggleModal = toggleModal; /*aggiungo funzione toggleModal al window perchè deve avere scope globale e perchè 2 pulsanti devono
@@ -113,6 +122,7 @@
     /*inserisco creazione del nostro wallet, che avverrà solo quando il nostro DOM sarà pronto*/
     window.addEventListener('DOMContentLoaded', function() {
         wallet = new Wallet(); //creazione variabile wallet che sarà la nuova istanza del costruttore Wallet
+        updateBalance(); //invoco funzione per aggiornare il saldo quando carico la pagina
         //console.log(wallet);  LOG PROVA per vedere class wallet con le sue funzioni
     });
 //})();

@@ -11,6 +11,10 @@ header .content {
     margin-right: auto;
     padding: 0 20px;
 }
+.header-options #balance-box:before { /*uso pseudo-elemento :before per aggiungere tramite CSS '€' prima del saldo balance-box*/
+    content: '€';
+    margin-right: 4px;
+}
 footer {
     height: 56px; /*altezza pari a quella dell'header*/
 }
