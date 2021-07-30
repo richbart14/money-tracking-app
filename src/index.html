@@ -137,9 +137,10 @@
         <!-- Start Toast container -->
         <!-- TOAST, ci permette di comunicare l'errore all'utente, se l'operazione è andata a buon fine o meno. 
             Non rispetta l'ordine del DOM, avrà una posizione fissa. -->    
-        <div class="toast">
-            <p class="toast__message">Operation added succesfully (messaggio di prova)</p>
-            <span class="icon icon-close-white"></span>
+        <div class="toast" id="toast">
+            <p class="toast__message"></p> <!--messaggio TOAST aggiunto in javascript con funzione showMessage()-->
+            <span class="icon icon-close-white toast__action" onclick="hideSnackbar()"></span>
+            <!-- richiamo funzione hideSnackbar per chiudere notifica toast cliccando sulla X-->
         </div>
         <!-- End Toast Container -->
     </main>

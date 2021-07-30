@@ -12,9 +12,35 @@
     //let wallet; /*definisco variabile wallet in questo scope(globale) così sarà accessibile sia dalle funzioni che nel DOMContentLoad per istanziare new Wallet*/
     
     const Wallet = require("./models/Wallet").Wallet; //require di Wallet, serve per BROWSERIFY
+    const Enums = require("./models/Wallet"); //serve per SnackbarTypes (o SUCCESS o ERROR per notifica TOAST) in showMessage
 
     let wallet;
 
+    const hideSnackbar = function() { //funzione per chiudere notifica toast cliccando sulla X
+        const toastElement = document.getElementById('toast'); //prendo il toast
+        toastElement.classList.remove('show'); //rimuovo classe show
+        toastElement.classList.remove('toast--error'); //rimuovo eventuale classe toast--error
+    } 
+    const showMessage = function(msg, type) { //funzione per comunicare all'utente l'inserimento dell'operazione attraverso il TOAST
+        //parametri: ricevo messaggio e il tipo(se è un success o un error)
+        const toastElement = document.getElementById('toast'); //prendo il TOAST
+        if(!toastElement || !msg || !Enums.SnackbarTypes[type]){ //CONTROLLO: nel caso non l'avessimo, o non avessi il msg o il type, effettuo return
+            return; //return termina l'istruzione, se è tutto ok prosegue
+        }
+        if(type === Enums.SnackbarTypes.ERROR) { //CONTROLLO TYPE: se è un ERROR aggiungi classe toast-error altrimenti sarà per default un SUCCESS
+            toastElement.classList.add('toast--error');
+        }
+        //prendo il nodo del messaggio partendo dal toastElement gia preso e non dal document, per velocizzare
+        const messageElement = toastElement.querySelector('.toast__message');
+        messageElement.textContent = msg; //inserisco del testo con textContent e lo passo poi nel parametro msg quando invoco la funzione
+        //SE è TUTTO OK MOSTRO IL MESSAGGIO(aggiungo classe show impostata con il css)
+        toastElement.classList.add('show');
+        setTimeout(function() { //AUTOELIMINAZIONE DELLA NOTIFICA TOAST DOPO 5 SECONDI
+            /*setTimeout ci permette di posticipare l'esecuzione di una funzione in base a un tot di secondi che noi decidiamo*/
+            hideSnackbar();
+        }, 5000);
+        
+    }
     const resetFormFields = function(form) { //funzione per resettare form di Aggiunta Operazione ADD OPERATION
         //leggo i valori dal form
         const amountInput = form.amount; 
@@ -41,8 +67,10 @@
             wallet.addOperation(operation); //vedo op in entrata e la passo ad addOperation nel costruttore wallet
             toggleModal(); //se operazione va a buon fine richiamo toggleModal per chiudere il pannello di aggiunta operazione
             resetFormFields(ev.target); //chiamo funzione per resettare il form
+            showMessage('Operation added succesfully!', Enums.SnackbarTypes.SUCCESS); //chiamo funzione con messaggio per il toast
         } catch(e) {
             console.error(e);
+            showMessage('Operation not added!', Enums.SnackbarTypes.ERROR);
         }
     }
     /*TRY-CATCH per gestione degli errori mirata alle operazioni. Stampo con il console.error l'errore.
@@ -82,6 +110,7 @@
         }
     }
 
+    window.hideSnackbar = hideSnackbar;
     window.addOperation = addOperation;
     window.toggleModal = toggleModal; /*aggiungo funzione toggleModal al window perchè deve avere scope globale e perchè 2 pulsanti devono
                                         accedere alla stessa funzione, + e x, apri e chiudi pannello, in questo modo velocizzo

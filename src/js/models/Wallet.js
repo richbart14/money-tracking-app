@@ -2,6 +2,8 @@
 //wallet.js è un costruttore, conterrà funzionalità principali del nostro portafoglio
 
 //(uso const per evitare riassegnazioni o ridichiarazioni)
+
+/* --start ENUMS-- */
 /*RACCHIUDENDO IN OBJECT.FREEZE CI PERMETTE DI EVITARE DALL'ESTERNO (console.log) MODIFICHE DI PRIMO LIVELLO
   (riassegnazioni di valore OUT, IN, INVALID_OPERATION, OPERATION_NOT_FOUND). così non è possibile accesso dalla console*/
 const OpType = Object.freeze({ //racchiude tipi di operazioni eseguibili all'interno della piattaforma, utilizzo OpType in funzione addOperation per controllo tipo spesa
@@ -13,6 +15,12 @@ const WalletErrors = Object.freeze({   //funzione che racchiude errori personali
     INVALID_OPERATION: 'INVALID_OPERATION',  //invalid operation ha come valore stringa "invalid_operation", nome che assegno io
     OPERATION_NOT_FOUND: 'OPERATION_NOT_FOUND'
 })
+
+const SnackbarTypes = Object.freeze({
+    SUCCESS: 'SUCCESS',
+    ERROR: 'ERROR'
+});
+/* --end ENUMS-- */
 
 function getWallet() { //funzione che ci permetterà di leggere dal LOCAL STORAGE
     const wallet = localStorage.getItem('wallet'); //vado a ricercare il portafoglio salvato nel local storage
@@ -141,8 +149,9 @@ class Wallet {
 }
 
 
-//ESPORTO WALLET E WALLEERRORS, SERVE PER BROWSERIFY
+//ESPORTO WALLET E WALLETERRORS, SERVE PER BROWSERIFY
 module.exports = {
     Wallet: Wallet,
-    WalletErrors: WalletErrors
+    WalletErrors: WalletErrors,
+    SnackbarTypes: SnackbarTypes
 }

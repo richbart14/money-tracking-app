@@ -5,6 +5,7 @@
                     Divido per 2 la dimensione di quello che voglio centrare.*/
     bottom: -100px;
     width: 300px;
+    z-index: 10; /*aumento z-index del toast per permettere il click della x del toast che si trova sul footer*/
     background-color: var(--success-color);
     color: white;
     padding: 12px;
@@ -18,7 +19,10 @@
 .toast.show { /*PER FAR APPARIRE MESSAGGIO: se toast ha anche attaccato la classe .show perchè fa parte di toast assegnamo bottom 20 px*/
     bottom: 20px;
 }
-.toast.toast--error { /*SE è TOST con messaggio di errore cambia colore*/
+.toast .toast__action {
+    cursor: pointer; /*cursor pointer sulla X del TOAST per chiudere la notifica*/
+}
+.toast.toast--error { /*SE è TOAST con messaggio di errore cambia colore*/
     background-color: var(--error-color);
 }
 .toast .toast__message {
