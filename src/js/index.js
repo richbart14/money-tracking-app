@@ -16,12 +16,12 @@
 
     let wallet;
 
-    const hideSnackbar = function() { //funzione per chiudere notifica toast cliccando sulla X
+    const hideSnackbar = function() { //FUNZIONE PER CHIUDERE NOTIFICA TOAST CLICCANDO SULLA 'X'
         const toastElement = document.getElementById('toast'); //prendo il toast
         toastElement.classList.remove('show'); //rimuovo classe show
         toastElement.classList.remove('toast--error'); //rimuovo eventuale classe toast--error
     } 
-    const showMessage = function(msg, type) { //funzione per comunicare all'utente l'inserimento dell'operazione attraverso il TOAST
+    const showMessage = function(msg, type) { //FUNZIONE PER COMUNICARE ALL'UTENTE L'INSERIMENTO DELL'OPERAZIONE ATTRAVERSO IL TOAST
         //parametri: ricevo messaggio e il tipo(se è un success o un error)
         const toastElement = document.getElementById('toast'); //prendo il TOAST
         if(!toastElement || !msg || !Enums.SnackbarTypes[type]){ //CONTROLLO: nel caso non l'avessimo, o non avessi il msg o il type, effettuo return
@@ -41,15 +41,7 @@
         }, 5000);
         
     }
-    const resetFormFields = function(form) { //funzione per resettare form di Aggiunta Operazione ADD OPERATION
-        //leggo i valori dal form
-        const amountInput = form.amount; 
-        const descriptionInput = form.description; 
-        //porto i rispettivi valori a 0 e vuoto ''
-        amountInput.value = 0;
-        descriptionInput.value = '';
-    }
-
+  
     const addOperation = function(ev) { //ricevo l'evento
         ev.preventDefault(); //fermo esecuzione standard del form. termino la propagazione. metodo dell'oggetto event
         const submitButton = ev.submitter;//leggo il submit, contenuto all'interno di ev.submitter
@@ -66,7 +58,7 @@
         try { //aggiungo operazione al WALLET, OPERAZIONE VIENE AGGIUNTA NEL LOCAL STORAGE
             wallet.addOperation(operation); //vedo op in entrata e la passo ad addOperation nel costruttore wallet
             toggleModal(); //se operazione va a buon fine richiamo toggleModal per chiudere il pannello di aggiunta operazione
-            resetFormFields(ev.target); //chiamo funzione per resettare il form
+            ev.target.reset(); //resetto i campi del form con metodo RESET di html 5 per i form
             showMessage('Operation added succesfully!', Enums.SnackbarTypes.SUCCESS); //chiamo funzione con messaggio per il toast
         } catch(e) {
             console.error(e);
