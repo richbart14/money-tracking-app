@@ -55,9 +55,9 @@
                         <th aria-label="Options"></th> <!--aria-label, ha questo valore Options ma non si vede-->
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body"> <!--id table-body serve per aggiornare operazioni nella tabella, funzione updateOperationsTable()-->
                     <!--Aggiungo manualmente operazione ESEMPIO, poi verranno generate dinamicante con Javascript-->
-                    <tr data-op-type="expense"> <!--uso data-op-type come attributo custom personalizzato, se expense o income cambia operation amount-->
+                    <tr data-op-type="out"> <!--uso data-op-type come attributo custom personalizzato, se out expense o income in cambia operation amount-->
                         <td>Electricity bill</td>
                         <td class="operation-amount">€ 200</td> 
                         <!--AMOUNT, vogliamo che operazione si colori di rosso o verde a seconda del suo tipo spesa o entrata-->

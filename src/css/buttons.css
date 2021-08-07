@@ -40,4 +40,5 @@ RACCHIUDE TUTTE LE CLASSI CHE VANNO A MODIFICARE STILE PULSANTI*/
     height: 56px;
     border-radius: 100px;
     border: 1px solid var(--primary-color); /*colore nero gestito in palette.css*/
+    background-color: whitesmoke;
 }

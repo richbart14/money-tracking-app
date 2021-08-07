@@ -11,7 +11,8 @@ header .content {
     margin-right: auto;
     padding: 0 20px;
 }
-.header-options #balance-box:before { /*uso pseudo-elemento :before per aggiungere tramite CSS '€' prima del saldo balance-box*/
+.header-options #balance-box::before, .operation-amount::before { 
+    /*uso pseudo-elemento :before per aggiungere tramite CSS '€' prima del saldo balance-box e prima degli amount della lista operazioni*/
     content: '€';
     margin-right: 4px;
 }
@@ -43,10 +44,10 @@ table {
 
 /*AMOUNT, attributo custom per il cambio dello stile dell'informazione dell'operazione.
  uso data-op-type come attributo custom personalizzato, se expense o income cambia stile operation amount*/
-tr[data-op-type="expense"] .operation-amount { 
+tr[data-op-type="out"] .operation-amount {  /*out sono le expense*/
     color: var(--error-color);
 }
-tr[data-op-type="income"] .operation-amount {
+tr[data-op-type="in"] .operation-amount { /*in sono le income*/
     color: var(--success-color);
 }
 
