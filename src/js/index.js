@@ -58,8 +58,8 @@ const removeOperation = function (id) {
     }
 }
 const resetSearch = function (event) { /*FUNZIONE PER RESETTARE IL FORM DI RICERCA CON LA "X"*/
-    event.preventDefault(); /*leggo l'event e fermo il submit/reindirizzamento del form*/
-    const formElement = event.target.closest('form'); /*ricerco il form*/
+    event.preventDefault();
+    const formElement = event.target.closest('form');
     if (!formElement) { /*se non trovo il form termino l'esecuzione*/
         return;
     }
@@ -68,9 +68,8 @@ const resetSearch = function (event) { /*FUNZIONE PER RESETTARE IL FORM DI RICER
     CLICCANDO SULLA X CANCELLA IL VALORE E RESTITUISCE NUOVAMENTE TUTTI I VALORI DELLA TABELLA*/
 }
 const searchOperation = function (event) {
-    event.preventDefault(); /*ricevo l'event e uso preventDefault per evitare reindirizzamento*/
-    const searchInput = event.target.searchInput; /*leggo/prendo il valore con event.target dal name nel form searchInput*/
-    /*console.log(wallet.findOperation(searchInput.value)) LEGGO OPERAZIONI NEL CONSOLE LOG*/
+    event.preventDefault();
+    const searchInput = event.target.searchInput; 
     const operationsToAdd = wallet.findOperation(searchInput.value);
     updateOperationsTable(operationsToAdd); /*UTILIZZO PARAMETRO per visualizzare solo elementi ricercati nel search o tutta la tabella, VEDI updateOperationsTableS*/
 }
@@ -98,30 +97,27 @@ const updateBalance = function () {
         return;
     }
     balanceElement.textContent = parseFloat(getBalance()).toLocaleString();
-}/*formatto il getbalance in base al locale, prima restituiva un numero intero, ora separa migliaia col punto e decimali con la virgola.
-parseFloat per essere sicuri che arrivi un numero. utilità del number di javascript*/
+}/*formatto il getbalance in base al locale con utilità del number di javascript, prima restituiva un numero intero, ora separa migliaia col punto e decimali con la virgola.*/
 
-const updateOperationsTable = function (initialOperation) { /*utilizzo parametro, per visualiizare solo elementi ricercati nel search o tutta la tabella*/
-    /*OPERAZIONE TERNARIA. se initialOperation è un array lo utilizzo (SEARCH), altrimenti effettuo tutto l'aggiornamento della tabella in base a getOperations*/
-    /*SE è un array lo utilizzo, altrimenti utilizzo come default il get operations.*/
-    const operations = Array.isArray(initialOperation) ? Array.from(initialOperation) : Array.from(getOperations()); /*prima di implementare il search, era presente soltanto Array.from(getOperations())*/
-    const tableContainerElement = document.getElementById('table-container'); /*ottengo ID table-container per FALLBACK MESSAGE "No operations found"*/
+const updateOperationsTable = function (initialOperation) { /*utilizzo parametro, per visualizzare solo elementi ricercati nel search o tutta la tabella*/
+    /*OPERAZIONE TERNARIA. SE è un array lo utilizzo, altrimenti utilizzo come default il get operations.*/
+    const operations = Array.isArray(initialOperation) ? Array.from(initialOperation) : Array.from(getOperations());
+    const tableContainerElement = document.getElementById('table-container'); /*FALLBACK MESSAGE "No operations found"*/
     const tableElement = document.getElementById('table-body');
     if (!tableElement || !tableContainerElement) {
-        return; /*Controllo che esistano altrimenti return, condizione unica*/
+        return;
     }
     tableElement.innerHTML = ''; /*elimino previamente contenuto tabella*/
-    if (!operations.length) { /*se non ha operazioni al suo interno, non ci sono operazioni nel wallet*/
-        tableContainerElement.classList.add('no-data'); /*aggiungi classe no data ed effettuo il return*/
+    if (!operations.length) { 
+        tableContainerElement.classList.add('no-data');
         return; 
     }
-    tableContainerElement.classList.remove('no-data'); /*altrimenti rimuovi classe no-data*/
+    tableContainerElement.classList.remove('no-data');
     operations.reverse().forEach(function (operation) {
         tableElement.appendChild(getOperationTableRow(operation));
     });
 }
 const getOperationTableRow = function (operation) {
-    // Add operation to table
     const trRow = document.createElement('tr');
     trRow.setAttribute('data-op-type', operation.type.toLowerCase());
     const cells = [{
@@ -156,13 +152,13 @@ const getDeleteActionBtn = function (operation) {
 }
 const onSearchInputChange = function (event) { /*FUNZIONE PER MOSTRARE "X" NEL SEARCH, */
     const searchValue = event.target.value; /*ricevo l'evento e dall'evento ottengo il valore*/
-    const resetSearchElmnt = document.getElementById('reset-search-btn'); /*prendo ID search button*/
+    const resetSearchElmnt = document.getElementById('reset-search-btn'); 
     if (!resetSearchElmnt) {
-        return; /*controllo che esista*/
+        return;
     }
-    if (!searchValue) { /*se non c'è un searchvalue è hide, altrimenti diventa visibile appena scrivo una lettera*/
-        resetSearchElmnt.classList.add('hide'); /*vedi helpers.css, hide per pulsante nascosto di base*/
-        return; /*aggiungo o elimino la classe hide*/
+    if (!searchValue) {
+        resetSearchElmnt.classList.add('hide');
+        return;
     }
     resetSearchElmnt.classList.remove('hide');
 }
